@@ -41,22 +41,23 @@ Pemilik memiliki keahlian kuat dalam arsitektur backend (PHP/Laravel, Java, MySQ
 
 ## 3. Spesifikasi Fungsional (Feature Specifications)
 
-### 3.1 Navigasi Global (`Navbar`)
-* **Status Bar & Stickiness:** Melekat di bagian atas layar (`sticky top-0`) dengan latar belakang `bg-cream/80` yang dilengkapi efek blur ringan (`backdrop-blur-md`).
-* **Scroll-aware Behavior:** Menyembunyikan diri saat pengguna menggulir ke bawah (*scroll down*) dan muncul kembali saat menggulir ke atas (*scroll up*).
-* **Indikator Progres Baca:** Garis mikro horizontal di batas bawah navbar yang melacak persentase gulir halaman (`useScroll` + `useSpring`).
-* **Multi-Language Switcher (`LanguageToggle`):** Tombol toggle interaktif `ID | EN`.
-  * Menyimpan preferensi bahasa ke `localStorage` (dilindungi blok `try/catch`).
-  * Mengubah atribut `lang` pada elemen `<html>` secara otomatis.
-  * Memanfaatkan layout animasi `layoutId` agar indikator seleksi aktif berpindah secara mulus.
+### 3.1 Navigasi Global (`Navbar` — Gaya Floating Island ala Sean Halpin)
+* **Struktur Floating Capsule:** Terapung di tengah atas viewport (`fixed top-3 sm:top-5 inset-x-0 mx-auto w-fit z-50`) dengan bentuk pil bulat (*rounded-full*), bukan batas garis kaku ujung-ke-ujung.
+* **Material Glassmorphism:** Latar belakang `bg-cream/75` (atau `bg-cream/90` saat di-scroll) yang dipadukan dengan `backdrop-blur-xl`, border halus `border-ink/10`, dan bayangan ringan `shadow-lg shadow-ink/5`.
+* **Gliding Tab Indicator (Signature Motion):** Tab latar belakang putih meluncur dinamis antar-menu saat kursor berpindah (*hovered*), didukung oleh mekanisme *shared layout animation* Framer Motion (`layoutId="seanHalpinGlidingPill"`) dengan fisika pegas responsif (`stiffness: 400, damping: 30`).
+* **Multi-Language Switcher (`LanguageToggle`):** Terintegrasi di sisi kanan kapsul (`ID | EN`) dengan animasi pill independen dan sinkronisasi `localStorage`.
+* **Mobile Floating Drawer:** Pada layar kecil, bar menampilkan logo, toggle bahasa, dan hamburger button. Saat dibuka, menu navigasi mengembang menjadi kartu mengambang dengan sudut membulat besar (*rounded-3xl*).
 
 ### 3.2 Bagian Hero (`Hero Section`)
-* **Mask Reveal Headline:** Nama dan peran utama ("Backend Developer") dianimasikan muncul vertikal dari balik garis batas pemotong (*mask reveal*).
-* **Value Proposition:** Ringkasan 2–3 kalimat yang berfokus pada kekuatan logika sistem backend, integritas basis data, dan proses belajar teknologi frontend modern.
-* **Call to Action (CTA):**
-  * Tombol Primer: *"Lihat Proyek"* (gulir halus ke section Projects).
-  * Tombol Sekunder: *"Hubungi Saya"* (gulir ke section Contact).
-  * Tombol primer dilengkapi interaksi mikro *magnetic hover* halus pada layar desktop.
+* **Arsitektur Grid 2 Kolom (Desktop):**
+  * **Kolom Kiri (Konten & Narasi):**
+    * *Mask Reveal Headline:* Nama ("Gilang Pratama Putra") dan peran ("Backend Developer") dianimasikan muncul meluncur dari balik batas pemotong (`overflow-hidden`).
+    * *Value Proposition:* Ringkasan lugas yang berfokus pada arsitektur sistem backend, integritas data relasional, dan pembelajaran frontend modern.
+    * *Call to Action (CTA):* Tombol *"Lihat Proyek"* (anchor `#projects`) dan *"Hubungi Saya"* (anchor `#contact`).
+  * **Kolom Kanan (Wadah Foto Profil Gilang):**
+    * Kartu foto profil berdimensi rasio $4:5$ dengan frame membulat modern (`rounded-3xl` berlatar belakang `bg-white/80` dan border `border-ink/10`).
+    * Menggunakan berkas sumber `src/assets/hero.png` yang siap diperbarui kapan saja oleh Gilang.
+    * Dilengkapi floating badge info status akademis Politeknik Negeri Jember (POLIJE) dan interaktivitas hover pegas (*tilt/elevation*).
 
 ### 3.3 Struktur Bento Grid (`About & Skills Section`)
 Menggunakan arsitektur modular Bento 3 kolom (desktop) dan 1 kolom bertumpuk (mobile):
@@ -272,11 +273,11 @@ Di setiap penyelesaian tahap pekerjaan, Agent wajib menyajikan 5 komponen lapora
 * [x] **Tahap 1:** Inisialisasi Vite + React + TypeScript + Tailwind v4, pengujian kerangka bento awal.
 * [x] **Tahap 2:** Pemasangan token `@theme` lengkap pada `src/index.css`, pembuatan modul `src/lib/motion.ts`, komponen `Navbar`, dan komponen reusable `BentoCard`.
 * [x] **Tahap 3:** Pembangunan section Hero, About, dan Bento Skills menggunakan data statis.
-* [ ] **Tahap 4:** Pemisahan konten ke layer `src/data/`, pembuatan komponen `ProjectCard` dan grid portofolio dinamis.
-* [ ] **Tahap 5:** Integrasi `react-i18next`, penyusunan kamus `id.json` & `en.json`, implementasi `LanguageToggle`.
-* [ ] **Tahap 6:** Pemasangan `React Router`, pembangunan layout dinamis `/projects/:slug`.
-* [ ] **Tahap 7:** Integrasi animasi tingkat lanjut (hero reveal, scroll progress, transisi rute), optimasi aksesibilitas, responsivitas mobile $375\text{ px}$, dan audit performa.
-* [ ] **Tahap 8:** Konfigurasi build produksi, optimasi aset WebP, dan deployment ke Vercel/Netlify.
+* [x] **Tahap 4:** Pemisahan konten ke layer `src/data/`, pembuatan komponen `ProjectCard` dan grid portofolio dinamis.
+* [x] **Tahap 5:** Integrasi `react-i18next`, penyusunan kamus `id.json` & `en.json`, implementasi `LanguageToggle`.
+* [x] **Tahap 6:** Pemasangan `React Router`, pembangunan layout dinamis `/projects/:slug`.
+* [x] **Tahap 7:** Integrasi animasi tingkat lanjut (hero reveal, scroll progress, transisi rute), optimasi aksesibilitas, responsivitas mobile $375\text{ px}$, dan audit performa.
+* [x] **Tahap 8:** Konfigurasi build produksi, optimasi aset WebP, dan deployment ke Vercel/Netlify.
 
 ### Fase 2 — Headless Content Management (Future Scope)
 * Persiapan migrasi dari `src/data/projects.ts` menuju RESTful API / Headless CMS backend tanpa mengubah struktur komponen frontend yang sudah terbangun.

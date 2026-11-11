@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "about": "Tentang",
+    "skills": "Keahlian",
+    "projects": "Proyek",
+    "contact": "Kontak",
+    "skipToContent": "Loncat ke Konten Utama"
+  },
+  "hero": {
+    "role": "Backend Developer",
+    "valueProp": "Mahasiswa Politeknik Negeri Jember yang berfokus pada arsitektur server kokoh, integritas basis data relasional, dan penyusunan API terstruktur. Terbuka mengeksplorasi ekosistem frontend modern untuk menghasilkan rekayasa perangkat lunak yang menyeluruh.",
+    "ctaProjects": "Lihat Proyek",
+    "ctaContact": "Hubungi Saya",
+    "photoBadge": "Gilang Pratama",
+    "academicBadge": "POLIJE"
+  },
+  "about": {
+    "tag": "Tentang & Filosofi Rekayasa",
+    "title": "Membangun Sistem dari Fondasi Logika yang Kokoh",
+    "desc": "Mengutamakan keteraturan arsitektur data, kode yang mudah dirawat, dan proses belajar terukur pada ekosistem modern.",
+    "cardProfileTag": "Backend Engineering",
+    "cardProfileTitle": "Struktur, Integritas & Keandalan",
+    "cardProfileDesc": "Sebagai mahasiswa di Politeknik Negeri Jember dengan minat mendalam pada rekayasa backend, saya percaya bahwa aplikasi yang hebat berakar dari model basis data yang solid, logika bisnis yang terisolasi rapi, dan keamanan akses yang terjamin.",
+    "cardSkillsTag": "Teknologi Inti",
+    "cardSkillsTitle": "Backend & Database",
+    "cardSkillsDesc": "Tumpukan teknologi yang saya gunakan secara produktif untuk membangun alur kerja server dan API.",
+    "cardLearningTag": "Sedang Dipelajari",
+    "cardLearningTitle": "Modern Frontend",
+    "cardLearningDesc": "Eksplorasi aktif untuk menjembatani logika server dengan antarmuka dinamis dan interaktif.",
+    "cardPrinciplesTag": "Prinsip Kerja & Praktik",
+    "cardPrinciplesTitle": "Standar Rekayasa yang Diterapkan",
+    "principles": {
+      "db": {
+        "title": "Desain Skema DB",
+        "desc": "Normalisasi tabel, integritas relasi foreign key, dan mitigasi N+1 query."
+      },
+      "api": {
+        "title": "RESTful Terstruktur",
+        "desc": "Format JSON seragam, penanganan HTTP status code, dan validasi ketat."
+      },
+      "code": {
+        "title": "Git & Modularitas",
+        "desc": "Branching rapi, pemisahan service layer, dan kemudahan pengujian unit."
+      }
+    },
+    "academicTitle": "Politeknik Negeri Jember (POLIJE)",
+    "academicDesc": "Fokus pada Rekayasa Perangkat Lunak & Sistem Informasi",
+    "location": "Jember, Jawa Timur, Indonesia"
+  },
+  "projects": {
+    "tag": "Portofolio Rekayasa",
+    "title": "Proyek & Implementasi Sistem",
+    "desc": "Dokumentasi rekayasa nyata berbasis arsitektur server, optimasi kueri, dan sistem modular.",
+    "featuredBadge": "Proyek Sorotan",
+    "viewDemo": "Demo",
+    "viewRepo": "Kode Sumber",
+    "status": {
+      "completed": "Selesai",
+      "inProgress": "Dalam Pengerjaan"
+    }
+  },
+  "contact": {
+    "tag": "Komunikasi Langsung",
+    "title": "Mari Diskusikan Peluang atau Kolaborasi Sistem",
+    "desc": "Terbuka untuk posisi Backend Developer, Magang Industri, maupun proyek rekayasa perangkat lunak.",
+    "sendEmail": "Kirim Email",
+    "copyEmail": "Salin Email",
+    "copied": "Tersalin!",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "visualCards": {
+    "terminal": {
+      "tag": "Runtime Server",
+      "title": "Eksekusi Service Backend",
+      "desc": "Menjalankan service backend dengan konfigurasi port lokal dan isolasi environment terkelola."
+    },
+    "endpoint": {
+      "tag": "Kontrak API",
+      "title": "Standar Endpoint RESTful",
+      "desc": "Spesifikasi kontrak terstruktur dengan serialisasi payload JSON standar dan penanganan status kode HTTP."
+    },
+    "erd": {
+      "tag": "Arsitektur Data",
+      "title": "Skema Relasional Basis Data",
+      "desc": "Desain pemodelan tabel ternormalisasi dengan integritas referensial kunci asing untuk menjamin konsistensi data."
+    }
+  },
+  "projectDetail": {
+    "back": "Kembali ke Beranda",
+    "viewCaseStudy": "Detail Proyek",
+    "problemTitle": "Kebutuhan & Tantangan Sistem",
+    "roleTitle": "Peran & Kontribusi Spesifik",
+    "archTitle": "Arsitektur & Keputusan Teknis",
+    "stackTitle": "Tumpukan Teknologi Terapan",
+    "linksTitle": "Akses & Repositori Proyek",
+    "notFoundTitle": "Proyek Tidak Ditemukan",
+    "notFoundDesc": "Studi kasus proyek yang Anda cari tidak tersedia atau tautan telah berpindah.",
+    "backToHome": "Kembali ke Beranda"
+  },
+  "footer": {
+    "copyright": "Gilang Pratama Putra • Dikembangkan dengan React 19, TypeScript, Tailwind v4 & Motion"
+  }
+}

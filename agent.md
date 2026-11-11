@@ -20,13 +20,14 @@ Jika ada konflik antara dua dokumen:
 3. Menjadi portofolio jangka panjang untuk karier.
 
 **Isi halaman (satu halaman utama + halaman detail proyek):**
-- Hero (nama, peran, tagline, tombol "Lihat Proyek" dan "Kontak")
+- Floating Capsule Navbar bergaya Sean Halpin (gliding indicator + toggle bahasa **ID / EN**)
+- Hero 2 kolom (kiri: nama, peran, value proposition, tombol CTA; kanan: space foto profil interaktif)
 - About + Skills dalam layout bento grid
 - Projects (kartu proyek)
 - Contact
-- Navbar dengan toggle bahasa **ID / EN**
+- Footer sederhana
 
-**Gaya desain:** semi colorful bento (bukan full dark). Detail lengkap ada di `DESIGN.md`.
+**Gaya desain:** semi colorful bento dipadukan dengan floating island UI (terinspirasi dari seanhalpin.xyz). Detail lengkap ada di `DESIGN.md`.
 
 ---
 
@@ -270,3 +271,27 @@ npm run build        # build produksi + cek TypeScript
 npm run lint         # cek kualitas kode
 npm run preview      # pratinjau hasil build
 ```
+
+Tambahkan visual playful berbasis ikon teknologi sesuai design.md bagian 15
+(tempel dulu bagian itu ke design.md). Kerjakan bertahap.
+
+SEBELUM menulis kode:
+1. Pasang react-icons dan verifikasi bahwa SiPhp, SiLaravel, SiMysql, SiPostgresql,
+   SiReact, SiTypescript, SiGit, dan FaJava benar-benar ada. Laporkan hasilnya.
+2. Tampilkan rencana singkat: komponen apa yang dibuat (TechSticker, StackCard,
+   TerminalCard, EndpointCard, ERDCard, Marquee) dan di section mana.
+
+Lingkup:
+- Buat data skill di src/data/skills.ts dengan tipe Skill (id, label, icon, color, group, status).
+- Komponen TechSticker reusable: kotak putih rounded-2xl, border tipis, ikon berwarna.
+- Hero: 5-6 stiker di sekitar foto, draggable dengan pegas, hover pop/tilt, gerak idle halus.
+- Kartu skills: grid stiker dikelompokkan (backend, database, frontend, tools) dengan label
+  "learning" untuk skill yang masih dipelajari.
+- Marquee ikon teknologi yang berhenti saat hover.
+- Minimal satu kartu visual (TerminalCard atau EndpointCard) dengan data generik.
+- Semua animasi memakai token dari src/lib/motion.ts dan menghormati prefers-reduced-motion.
+- Teks UI lewat i18n (t()), bukan hardcode.
+- Jangan mengarang data. Konten kartu visual harus generik, bukan data instansi.
+
+Setelah selesai: npm run build dan npm run lint, uji di 375/768/1280px (ID dan EN), lalu
+laporkan dengan format agent.md bagian 3.4 beserta animasi apa yang ditambahkan dan alasannya.

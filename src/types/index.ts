@@ -26,6 +26,8 @@ export interface Project {
   title: LocalizedText
   summary: LocalizedText
   description?: LocalizedText
+  problem?: LocalizedText
+  architecture?: LocalizedText
   role: LocalizedText
   techStack: string[]
   thumbnail?: string

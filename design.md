@@ -100,13 +100,16 @@ Font dimuat lewat Google Fonts di `index.html` dan didaftarkan di `@theme`.
 - Bayangan: **minimal atau tanpa bayangan**. Kedalaman dihasilkan dari warna dan border, bukan shadow tebal.
 
 ### Susunan section (urutan di halaman)
-1. **Navbar** (menempel di atas)
-2. **Hero**: nama, peran "Backend Developer", tagline, dua tombol
+1. **Navbar (Floating Island Capsule ala Sean Halpin)**: mengapung di tengah atas layar dengan sliding tab indicator.
+2. **Hero (2 Kolom Desktop)**:
+   - Kiri: nama, peran "Backend Developer", tagline/value proposition, tombol CTA
+   - Kanan: wadah kartu foto profil interaktif (`src/assets/hero.png`) dengan sudut membulat modern dan stiker teknologi playful.
 3. **About + Skills (bento)**:
    - Kartu profil (indigo, `md:col-span-2`)
-   - Kartu skills/stack (coral)
-   - Kartu "Sedang dipelajari" (mint)
-   - Kartu tambahan netral, misalnya statistik singkat atau kutipan
+   - Kartu skills/stack (coral) dengan stiker teknologi
+   - Kartu "Sedang dipelajari" (mint) dengan stiker teknologi
+   - Kartu visual backend (TerminalCard & EndpointCard)
+   - Kartu institusi akademik & lokasi (white, `md:col-span-3`)
 4. **Projects**: grid kartu proyek (kartu `sun` untuk proyek unggulan, kartu netral untuk lainnya)
 5. **Contact**: kartu besar dengan email, GitHub, LinkedIn
 6. **Footer** sederhana
@@ -135,10 +138,11 @@ Props yang diharapkan: warna (`indigo | coral | mint | sun | white`), ukuran/spa
 - Fokus keyboard: ring terlihat jelas (`focus-visible:ring-2 focus-visible:ring-indigo-brand focus-visible:ring-offset-2`).
 - Area sentuh minimal **44x44px** di mobile.
 
-### Navbar
-- Menempel di atas (`sticky top-0`), latar `cream` semi-transparan dengan blur ringan.
-- Isi: nama/logo di kiri, menu section di tengah/kanan, **toggle bahasa ID | EN** di kanan.
-- Mobile: menu ringkas (hamburger) yang mudah dijangkau.
+### Navbar (Gaya Floating Capsule Sean Halpin)
+- Mengapung di tengah atas (`fixed top-3 sm:top-5 inset-x-0 mx-auto w-fit`), bentuk kapsul penuh (`rounded-full`).
+- Saat di puncak halaman, navbar transparan menyatu dengan kanvas. Saat digulir ke bawah, bertransisi menjadi latar `bg-cream/85` dengan `backdrop-blur-xl` dan border `border-ink/10`.
+- Efek **Gliding Tab Indicator**: latar belakang pill putih meluncur mulus menggunakan Framer Motion `layoutId` saat kursor berpindah antar-tautan navigasi.
+- Isi: Monogram bulat "G" di kiri, menu navigasi di tengah, **toggle bahasa ID | EN** dan tombol mobile drawer di kanan.
 
 ### Toggle bahasa
 - Dua pilihan jelas: `ID` dan `EN`, yang aktif ditandai dengan latar `ink` dan teks `cream`.
@@ -313,3 +317,29 @@ Isi web sama pentingnya dengan tampilannya.
 - **Dua bahasa dengan kualitas setara:** versi EN bukan terjemahan kaku, dan versi ID bukan terjemahan mentah. Keduanya ditulis wajar dan natural.
 - **Deskripsi proyek** mengikuti pola: masalah, peran Gilang, teknologi, hasil. Hindari klaim tanpa bukti.
 - **Microcopy** (tombol, label, pesan kosong) ikut dirancang: jelas, ramah, tidak generik ("Klik di sini" dihindari).
+
+---
+
+## 15. Ikon Teknologi dan Visual Playful
+
+### 15.1 Spesifikasi Stiker Teknologi (`TechSticker`)
+- **Visual Stiker:** Kotak putih `bg-white`, sudut membulat `rounded-2xl`, border tipis `border border-ink/10`, bayangan halus `shadow-xs`.
+- **Ikon Brand:** Menggunakan ikon resmi dari `react-icons` (`Si` dan `Fa`) dengan warna brand resmi. Ikon dekoratif diberi atribut `aria-hidden="true"`; nama teknologi tetap tersedia sebagai teks untuk aksesibilitas.
+- **Hero Section:** Maksimal 5–6 stiker mengelilingi kartu foto profil.
+- **Perilaku Gerak:**
+  - *Hover pop/tilt:* Skala naik sedikit dengan rotasi dinamis (`hover:scale-105 hover:rotate-2`).
+  - *Draggable:* Dapat ditarik kursor pengguna dengan batas (*drag constraints*) dan otomatis kembali ke posisi asal dengan fisika pegas (`dragSnapToOrigin={true}`).
+  - *Idle Motion:* Gerak mengambang halus vertikal dengan amplitudo kecil (pengecualian terbatas dari larangan loop animasi).
+  - *Aksesibilitas:* Seluruh animasi gerak dimatikan saat `prefers-reduced-motion: reduce`.
+
+### 15.2 Kartu Visual Backend Pengganti Teks Panjang
+- Pengganti paragraf teks panjang dengan visualisasi teknis backend yang representatif:
+  - **`TerminalCard`:** Cuplikan baris perintah generik CLI (`php artisan serve`) dengan efek kursor berkedip dan status runtime server.
+  - **`EndpointCard`:** Visualisasi endpoint RESTful HTTP dengan badge metode (`GET`, `POST`), status respons `200 OK`, serta cuplikan payload JSON pendek.
+- **Batasan Konten:**
+  - Isi kartu **wajib generik dan ilustratif**; tidak boleh menampilkan data, endpoint privat, atau nama tabel instansi nyata.
+  - Batas teks per kartu: Judul maksimal 4 kata, deskripsi maksimal sekitar 20 kata, satu konsep inti per kartu.
+
+### 15.3 Marquee Ikon Teknologi (`TechMarquee`)
+- Deretan stiker teknologi berjalan horizontal secara kontinu.
+- **Interaksi:** Otomatis berhenti berputar (*pause animation*) saat kursor diarahkan (*hover*) atau saat sistem mendeteksi preferensi `prefers-reduced-motion`.

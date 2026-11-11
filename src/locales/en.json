@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact",
+    "skipToContent": "Skip to Main Content"
+  },
+  "hero": {
+    "role": "Backend Developer",
+    "valueProp": "Politeknik Negeri Jember student specializing in solid server architectures, relational database integrity, and structured API development. Actively exploring modern frontend ecosystems to craft cohesive software engineering solutions.",
+    "ctaProjects": "View Projects",
+    "ctaContact": "Contact Me",
+    "photoBadge": "Gilang Pratama",
+    "academicBadge": "POLIJE"
+  },
+  "about": {
+    "tag": "About & Engineering Philosophy",
+    "title": "Architecting Systems on Solid Foundations of Logic",
+    "desc": "Prioritizing structured data design, maintainable clean code, and measured progression into modern interfaces.",
+    "cardProfileTag": "Backend Engineering",
+    "cardProfileTitle": "Structure, Integrity & Reliability",
+    "cardProfileDesc": "As a student at Politeknik Negeri Jember with a focus on backend development, I believe great software roots in resilient database models, neatly isolated business logic, and secured access controls.",
+    "cardSkillsTag": "Core Technologies",
+    "cardSkillsTitle": "Backend & Database",
+    "cardSkillsDesc": "Tech stack I utilize productively to construct server-side workflows and robust APIs.",
+    "cardLearningTag": "Currently Learning",
+    "cardLearningTitle": "Modern Frontend",
+    "cardLearningDesc": "Active exploration bridging server logic with reactive and interactive user interfaces.",
+    "cardPrinciplesTag": "Principles & Best Practices",
+    "cardPrinciplesTitle": "Engineering Standards in Practice",
+    "principles": {
+      "db": {
+        "title": "Relational DB Design",
+        "desc": "Table normalization, foreign key constraint integrity, and N+1 query mitigation."
+      },
+      "api": {
+        "title": "Structured RESTful",
+        "desc": "Consistent JSON payload contracts, proper HTTP status codes, and strict validation."
+      },
+      "code": {
+        "title": "Git & Modularity",
+        "desc": "Clean branching models, service layer decoupling, and testable code."
+      }
+    },
+    "academicTitle": "Politeknik Negeri Jember (POLIJE)",
+    "academicDesc": "Focusing on Software Engineering & Information Systems",
+    "location": "Jember, East Java, Indonesia"
+  },
+  "projects": {
+    "tag": "Engineering Portfolio",
+    "title": "Projects & System Implementations",
+    "desc": "Real-world engineering documentation highlighting server architectures, query optimization, and modular systems.",
+    "featuredBadge": "Featured Project",
+    "viewDemo": "Demo",
+    "viewRepo": "Source Code",
+    "status": {
+      "completed": "Completed",
+      "inProgress": "In Progress"
+    }
+  },
+  "contact": {
+    "tag": "Direct Communication",
+    "title": "Let's Discuss Opportunities or System Collaborations",
+    "desc": "Open for Backend Developer roles, industrial internships, or collaborative software engineering projects.",
+    "sendEmail": "Send Email",
+    "copyEmail": "Copy Email",
+    "copied": "Copied!",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "visualCards": {
+    "terminal": {
+      "tag": "Server Runtime",
+      "title": "Backend Service Execution",
+      "desc": "Running backend services with managed local port binding and lifecycle environment isolation."
+    },
+    "endpoint": {
+      "tag": "API Contracts",
+      "title": "Standardized RESTful Endpoints",
+      "desc": "Structured contract specification featuring standardized JSON payload serialization and HTTP response codes."
+    },
+    "erd": {
+      "tag": "Data Architecture",
+      "title": "Relational Database Schema",
+      "desc": "Normalized relational table schema featuring foreign key integrity constraints to guarantee application data consistency."
+    }
+  },
+  "projectDetail": {
+    "back": "Back to Home",
+    "viewCaseStudy": "Project Detail",
+    "problemTitle": "System Requirements & Challenges",
+    "roleTitle": "Role & Specific Contribution",
+    "archTitle": "Technical Architecture & Decisions",
+    "stackTitle": "Applied Technology Stack",
+    "linksTitle": "Project Access & Repositories",
+    "notFoundTitle": "Project Not Found",
+    "notFoundDesc": "The project case study you are looking for does not exist or has been moved.",
+    "backToHome": "Back to Home"
+  },
+  "footer": {
+    "copyright": "Gilang Pratama Putra • Built with React 19, TypeScript, Tailwind v4 & Motion"
+  }
+}

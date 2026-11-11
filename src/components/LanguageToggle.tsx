@@ -1,58 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { motion } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import type { Locale } from '../types'
 import { SPRING } from '../lib/motion'
 
 export interface LanguageToggleProps {
-  currentLocale?: Locale
-  onLocaleChange?: (locale: Locale) => void
   className?: string
 }
 
-export const LanguageToggle: React.FC<LanguageToggleProps> = ({
-  currentLocale: controlledLocale,
-  onLocaleChange,
-  className = '',
-}) => {
-  // Local state dengan inisialisasi aman dari localStorage
-  const [internalLocale, setInternalLocale] = useState<Locale>(() => {
-    try {
-      const saved = localStorage.getItem('portfolio_locale')
-      if (saved === 'id' || saved === 'en') return saved
-    } catch {
-      // localStorage dinonaktifkan atau diakses di lingkungan terbatas
-    }
-    return 'id'
-  })
+export const LanguageToggle: React.FC<LanguageToggleProps> = ({ className = '' }) => {
+  const { i18n } = useTranslation()
 
-  const activeLocale = controlledLocale ?? internalLocale
+  // Ambil bahasa aktif dari react-i18next, fallback ke 'id'
+  const activeLocale: Locale = i18n.language?.startsWith('en') ? 'en' : 'id'
 
   const handleSelect = (locale: Locale) => {
-    if (controlledLocale === undefined) {
-      setInternalLocale(locale)
+    if (activeLocale !== locale) {
+      i18n.changeLanguage(locale)
       try {
         localStorage.setItem('portfolio_locale', locale)
       } catch {
-        // Abaikan error saat akses storage diblokir
+        // Abaikan saat akses local storage diblokir
       }
     }
-
-    // Update atribut lang pada elemen html sesuai PRD.md Bagian 3.1
-    if (typeof document !== 'undefined') {
-      document.documentElement.lang = locale
-    }
-
-    if (onLocaleChange) {
-      onLocaleChange(locale)
-    }
   }
-
-  // Sinkronisasi atribut html lang saat pertama kali mount
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.lang = activeLocale
-    }
-  }, [activeLocale])
 
   const options: { id: Locale; label: string }[] = [
     { id: 'id', label: 'ID' },
@@ -62,7 +33,7 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({
   return (
     <div
       role="radiogroup"
-      aria-label="Pilih bahasa tampilan"
+      aria-label="Pilih bahasa tampilan / Select display language"
       className={`relative inline-flex items-center rounded-full bg-ink/5 p-1 border border-ink/10 ${className}`}
     >
       {options.map((option) => {
@@ -75,7 +46,7 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({
             role="radio"
             aria-checked={isActive}
             onClick={() => handleSelect(option.id)}
-            className={`relative z-10 flex min-h-[36px] min-w-[38px] items-center justify-center rounded-full px-3 text-xs font-mono font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand ${
+            className={`relative z-10 flex min-h-[34px] min-w-[36px] items-center justify-center rounded-full px-2.5 text-xs font-mono font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand ${
               isActive ? 'text-cream font-semibold' : 'text-ink/70 hover:text-ink'
             }`}
           >
