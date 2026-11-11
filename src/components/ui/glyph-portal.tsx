@@ -151,6 +151,7 @@ export const GlyphPortal: React.FC<GlyphPortalProps> = ({
   const safeScrollLength = Number.isFinite(scrollLength) ? clamp(scrollLength, 1, 8) : 2.4
   const safeFontWeight = Number.isFinite(fontWeight) ? clamp(fontWeight, 1, 1000) : 900
   const hasFront = front != null
+  const hasChildren = children != null
   const selector = `:where(#${sectionId})`
 
   useLayoutEffect(() => {
@@ -324,7 +325,7 @@ export const GlyphPortal: React.FC<GlyphPortalProps> = ({
     const paint = (pos: number) => {
       const isMotionOff = reducedMotion.matches || !isFontReady || isFontTimedOut || !targetGlyph
       const prog = isMotionOff ? 0 : pos
-      const zoomProgress = clamp(prog / 0.78)
+      const zoomProgress = clamp(prog / (hasChildren ? 0.78 : 0.94))
       const easedProgress =
         zoomProgress < 0.5
           ? 4 * zoomProgress ** 3
@@ -543,7 +544,7 @@ export const GlyphPortal: React.FC<GlyphPortalProps> = ({
       choices.removeEventListener('keydown', onChoiceKey)
       select.removeEventListener('change', onSelectChange)
     }
-  }, [safeWord, focusChar, interactive, fontFamily, safeFontWeight, safeScrollLength, clipId, hasFront])
+  }, [safeWord, focusChar, interactive, fontFamily, safeFontWeight, safeScrollLength, clipId, hasFront, hasChildren])
 
   return (
     <section
@@ -745,6 +746,13 @@ export const GlyphPortal: React.FC<GlyphPortalProps> = ({
           background: var(--gp-field);
           overflow-wrap: anywhere;
         }
+        ${selector}[data-gp-motion=on] {
+          height: calc((1 + var(--gp-length)) * var(--gp-height, 100svh));
+        }
+        ${selector}[data-gp-motion=on]:has([data-gp-content]) {
+          height: auto;
+          min-height: calc((1 + var(--gp-length)) * var(--gp-height, 100svh));
+        }
         ${selector}[data-gp-motion=on] [data-gp-pin] {
           position: sticky;
           top: 0;
@@ -923,9 +931,11 @@ export const GlyphPortal: React.FC<GlyphPortalProps> = ({
         )}
       </div>
 
-      <div data-gp-content="true" id={`${sectionId}-content`} tabIndex={-1}>
-        {children ?? null}
-      </div>
+      {children ? (
+        <div data-gp-content="true" id={`${sectionId}-content`} tabIndex={-1}>
+          {children}
+        </div>
+      ) : null}
     </section>
   )
 }
