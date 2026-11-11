@@ -37,4 +37,4 @@ export interface Project {
   status: ProjectStatus
 }
 
-export type BentoCardVariant = 'indigo' | 'coral' | 'mint' | 'sun' | 'white'
+export type BentoCardVariant = 'indigo' | 'coral' | 'mint' | 'sun' | 'white' | 'dark'

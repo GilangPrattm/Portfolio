@@ -42,25 +42,25 @@ export const TerminalCard: React.FC<TerminalCardProps> = ({ className = '' }) =>
   }, [shouldReduceMotion])
 
   return (
-    <BentoCard variant="white" className={`flex flex-col justify-between ${className}`}>
+    <BentoCard variant="dark" className={`flex flex-col justify-between ${className}`}>
       {/* Teks Lengkap untuk Pembaca Layar (Screen Reader) */}
       <div className="sr-only" aria-live="polite">
         Terminal backend CLI: Perintah {fullCommand}. Output: INFO Server running on http://127.0.0.1:8000.
       </div>
 
       <div>
-        <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-ink/60">
+        <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-zinc-400">
           <Terminal className="h-3.5 w-3.5 text-indigo-brand" aria-hidden="true" />
           <span>{t('visualCards.terminal.tag')}</span>
         </div>
 
         {/* Judul: Maksimal 4 kata */}
-        <h3 className="mt-2 font-display text-xl font-bold text-ink md:text-2xl">
+        <h3 className="mt-2 font-display text-xl font-bold text-white md:text-2xl">
           {t('visualCards.terminal.title')}
         </h3>
 
         {/* Deskripsi: Maksimal ~20 kata, satu ide */}
-        <p className="mt-2 text-sm leading-relaxed text-ink/75">
+        <p className="mt-2 text-sm leading-relaxed text-zinc-300">
           {t('visualCards.terminal.desc')}
         </p>
       </div>
@@ -68,7 +68,7 @@ export const TerminalCard: React.FC<TerminalCardProps> = ({ className = '' }) =>
       {/* Visualisasi Terminal (aria-hidden untuk mencegah pembaca layar mengeja per huruf) */}
       <div
         aria-hidden="true"
-        className="mt-5 overflow-hidden rounded-2xl border border-ink/15 bg-ink p-4 font-mono text-xs shadow-inner select-none"
+        className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-[#090a10] p-4 font-mono text-xs shadow-inner select-none"
       >
         {/* Kontrol Window Dot */}
         <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3">

@@ -47,20 +47,20 @@ export const ERDCard: React.FC<ERDCardProps> = ({ className = '' }) => {
   const shouldReduceMotion = useReducedMotion()
 
   return (
-    <BentoCard variant="white" className={`flex flex-col justify-between ${className}`}>
+    <BentoCard variant="dark" className={`flex flex-col justify-between ${className}`}>
       <div>
-        <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-ink/60">
+        <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-zinc-400">
           <Database className="h-3.5 w-3.5 text-indigo-brand" aria-hidden="true" />
           <span>{t('visualCards.erd.tag')}</span>
         </div>
 
         {/* Judul: Maksimal 4 kata */}
-        <h3 className="mt-2 font-display text-xl font-bold text-ink md:text-2xl">
+        <h3 className="mt-2 font-display text-xl font-bold text-white md:text-2xl">
           {t('visualCards.erd.title')}
         </h3>
 
         {/* Deskripsi: Maksimal ~20 kata, satu ide */}
-        <p className="mt-2 text-sm leading-relaxed text-ink/75">
+        <p className="mt-2 text-sm leading-relaxed text-zinc-300">
           {t('visualCards.erd.desc')}
         </p>
       </div>
@@ -70,14 +70,14 @@ export const ERDCard: React.FC<ERDCardProps> = ({ className = '' }) => {
         {TABLES.map((tbl, idx) => (
           <React.Fragment key={tbl.name}>
             {/* Tabel Mini */}
-            <div className="flex-1 rounded-2xl border border-ink/10 bg-cream/50 p-3 shadow-xs">
-              <div className="flex items-center justify-between border-b border-ink/10 pb-1.5 mb-2 font-mono text-xs font-bold text-ink">
+            <div className="flex-1 rounded-2xl border border-white/10 bg-[#0a0b10] p-3 shadow-xs">
+              <div className="flex items-center justify-between border-b border-white/10 pb-1.5 mb-2 font-mono text-xs font-bold text-white">
                 <span>{tbl.name}</span>
-                <span className="text-[10px] text-ink/40 font-normal">table</span>
+                <span className="text-[10px] text-zinc-400 font-normal">table</span>
               </div>
               <ul className="space-y-1 font-mono text-[11px]">
                 {tbl.columns.map((col) => (
-                  <li key={col.name} className="flex items-center justify-between text-ink/80">
+                  <li key={col.name} className="flex items-center justify-between text-zinc-300">
                     <span className="flex items-center gap-1 font-medium">
                       {col.isKey && (
                         <Key
@@ -87,7 +87,7 @@ export const ERDCard: React.FC<ERDCardProps> = ({ className = '' }) => {
                       )}
                       <span>{col.name}</span>
                     </span>
-                    <span className="text-[10px] text-ink/50">{col.type}</span>
+                    <span className="text-[10px] text-zinc-500">{col.type}</span>
                   </li>
                 ))}
               </ul>
@@ -97,7 +97,7 @@ export const ERDCard: React.FC<ERDCardProps> = ({ className = '' }) => {
             {idx < TABLES.length - 1 && (
               <div className="flex items-center justify-center sm:flex-col py-1 sm:py-0">
                 <svg
-                  className="h-5 w-12 sm:h-8 sm:w-10 overflow-visible text-ink/40"
+                  className="h-5 w-12 sm:h-8 sm:w-10 overflow-visible text-zinc-500"
                   viewBox="0 0 40 20"
                   aria-hidden="true"
                 >

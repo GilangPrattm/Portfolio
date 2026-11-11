@@ -2,7 +2,7 @@ import React from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { ArrowDown, Mail, Terminal, Sparkles } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import heroImage from '../assets/hero.png'
+import heroImage from '../assets/hero.webp'
 import { SKILLS } from '../data/skills'
 import { TechSticker } from '../components/TechSticker'
 import {
@@ -32,7 +32,7 @@ export const HeroSection: React.FC = () => {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative pt-20 pb-8 sm:pt-24 md:pt-28 md:pb-12"
+      className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-12 pt-20 pb-8 sm:pt-24 md:pt-28 md:pb-12"
     >
       <motion.div
         variants={staggerContainerVariants}
@@ -49,7 +49,7 @@ export const HeroSection: React.FC = () => {
                 initial={shouldReduceMotion ? { opacity: 0 } : { y: '100%', opacity: 0 }}
                 animate={shouldReduceMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
                 transition={{ duration: DURATION.slow, ease: TRANSITION_EASE }}
-                className="font-display text-4xl font-extrabold tracking-tight text-ink sm:text-6xl md:text-7xl"
+                className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl"
               >
                 Gilang Pratama Putra
               </motion.h1>
@@ -60,9 +60,9 @@ export const HeroSection: React.FC = () => {
                 initial={shouldReduceMotion ? { opacity: 0 } : { y: '100%', opacity: 0 }}
                 animate={shouldReduceMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
                 transition={{ duration: DURATION.slow, ease: TRANSITION_EASE, delay: 0.12 }}
-                className="flex items-center gap-2.5 font-display text-2xl font-bold text-indigo-brand sm:text-4xl md:text-5xl"
+                className="flex items-center gap-2.5 font-display text-2xl font-bold text-indigo-400 sm:text-4xl md:text-5xl"
               >
-                <Terminal className="h-6 w-6 text-indigo-brand md:h-10 md:w-10" aria-hidden="true" />
+                <Terminal className="h-6 w-6 text-indigo-400 md:h-10 md:w-10" aria-hidden="true" />
                 <span>{t('hero.role')}</span>
               </motion.div>
             </div>
@@ -70,7 +70,7 @@ export const HeroSection: React.FC = () => {
 
           <motion.p
             variants={fadeUpVariants}
-            className="max-w-2xl text-base leading-relaxed text-ink/80 sm:text-lg"
+            className="max-w-2xl text-base leading-relaxed text-zinc-300 sm:text-lg"
           >
             {t('hero.valueProp')}
           </motion.p>
@@ -96,7 +96,7 @@ export const HeroSection: React.FC = () => {
               initial="rest"
               whileHover={shouldReduceMotion ? undefined : 'hover'}
               whileTap={shouldReduceMotion ? undefined : 'tap'}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border-2 border-indigo-brand bg-white/80 px-7 py-3 font-display text-sm font-bold text-indigo-brand shadow-xs transition-all hover:bg-indigo-brand hover:text-white hover:shadow-md hover:shadow-indigo-brand/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand focus-visible:ring-offset-2"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border-2 border-indigo-400/60 bg-white/5 px-7 py-3 font-display text-sm font-bold text-white shadow-xs transition-all hover:bg-indigo-brand hover:border-indigo-brand hover:text-white hover:shadow-md hover:shadow-indigo-brand/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand focus-visible:ring-offset-2"
             >
               <Mail className="h-4 w-4" aria-hidden="true" />
               <span>{t('hero.ctaContact')}</span>
@@ -130,9 +130,9 @@ export const HeroSection: React.FC = () => {
             <motion.div
               whileHover={shouldReduceMotion ? undefined : { y: -4, rotate: 0.5 }}
               transition={SPRING.snappy}
-              className="group relative w-full rounded-3xl border border-ink/10 bg-white/80 p-3 shadow-xl backdrop-blur-md"
+              className="group relative w-full rounded-3xl border border-white/10 bg-zinc-900/80 p-3 shadow-2xl backdrop-blur-md"
             >
-              <div className="relative aspect-4/5 w-full overflow-hidden rounded-2xl bg-cream/70 border border-ink/5">
+              <div className="relative aspect-4/5 w-full overflow-hidden rounded-2xl bg-zinc-800/80 border border-white/10">
                 <img
                   src={heroImage}
                   alt="Foto Profil Gilang Pratama Putra"
@@ -140,12 +140,12 @@ export const HeroSection: React.FC = () => {
                   loading="eager"
                 />
 
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl bg-ink/75 px-3 py-2 text-cream backdrop-blur-md">
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl bg-black/85 px-3 py-2 text-white border border-white/10 backdrop-blur-md">
                   <div className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-mint animate-pulse" />
                     <span className="font-mono text-xs font-medium">{t('hero.photoBadge')}</span>
                   </div>
-                  <span className="flex items-center gap-1 font-mono text-[10px] text-cream/80">
+                  <span className="flex items-center gap-1 font-mono text-[10px] text-white/80">
                     <Sparkles className="h-3 w-3 text-sun" /> {t('hero.academicBadge')}
                   </span>
                 </div>

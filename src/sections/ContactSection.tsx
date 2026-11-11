@@ -24,7 +24,7 @@ export const ContactSection: React.FC = () => {
     <section
       id="contact"
       aria-labelledby="contact-title"
-      className="relative scroll-mt-24 pt-12 pb-12 mt-12"
+      className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-12 scroll-mt-24 pt-12 pb-16"
     >
       <div className="relative z-10 space-y-12">
         {/* Kartu Kontak Bento (Mengapung elegan di atas peta kontur topografi luar) */}

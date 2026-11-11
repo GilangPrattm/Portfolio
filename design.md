@@ -69,13 +69,19 @@ Target kontras: minimal **4.5:1** untuk teks biasa dan **3:1** untuk teks besar 
 
 ## 3. Tipografi
 
-Font dimuat lewat Google Fonts di `index.html` dan didaftarkan di `@theme`.
+Hanya **dua font**, keduanya font sistem: **tidak ada Google Fonts / CDN font**. Konsekuensinya nol request font eksternal, tidak ada FOUT, dan render instan.
 
 | Peran | Font | Token / kelas | Bobot |
 |---|---|---|---|
-| Judul & display | **Plus Jakarta Sans** | `font-display` | 600, 700, 800 |
-| Teks isi / UI | **Inter** | `font-sans` | 400, 500, 600 |
-| Kode / tag teknologi | **JetBrains Mono** | `font-mono` | 400, 500 |
+| **Judul & teks besar (utama)** | **Verdana** | `font-display`, plus otomatis untuk `h1`–`h6` | 400, 700 |
+| **Teks isi, penjelasan, label, tag (sekunder)** | **Arial** | `font-sans` (default `body`), `font-mono` | 400, 700 |
+
+- Token didefinisikan di `src/index.css` blok `@theme`: `--font-display: Verdana…`, `--font-sans: Arial…`, `--font-mono: Arial…`.
+- Fallback: `Verdana, Geneva, Arial, sans-serif` untuk judul dan `Arial, Helvetica, sans-serif` untuk isi.
+- Verdana hanya punya dua bobot asli (400 & 700). `font-semibold` (600) dan `font-extrabold`/`font-black` (800/900) akan dirender browser sebagai bold 700 — jangan berharap perbedaan halus antar bobot.
+- Kelas `font-mono` **tetap dipakai di markup** (label eyebrow, tag teknologi, terminal) tetapi kini dirender dengan **Arial**, bukan monospace, agar total tetap dua font.
+- Judul raksasa "PROJECT" pada portal (§17) juga memakai Verdana; font eksternal "Glyph Portal Jakarta" sudah dihapus.
+- Verdana lebih lebar dari font sans sebelumnya → perhatikan pill navbar dan teks panjang; jangan menambah `tracking-wide` pada Verdana berukuran kecil karena cepat melebar.
 
 ### Skala ukuran (mobile → desktop)
 
@@ -92,7 +98,7 @@ Font dimuat lewat Google Fonts di `index.html` dan didaftarkan di `@theme`.
 - Judul: `leading-tight` dan sedikit `tracking-tight`.
 - Teks isi: `leading-relaxed`, lebar baris maksimal sekitar **65 karakter** (`max-w-prose`).
 - Ukuran teks isi **tidak boleh di bawah 16px** di mobile (kecuali caption/tag).
-- Hanya pakai bobot yang sudah dimuat. Jangan menambah bobot baru tanpa memperbarui link font.
+- Bobot efektif hanya **400** dan **700** (batas font sistem). Untuk hierarki, andalkan ukuran, warna, dan spasi — bukan variasi bobot.
 
 ---
 
@@ -155,7 +161,7 @@ Props yang diharapkan: warna (`indigo | coral | mint | sun | white`), ukuran/spa
 - Mengapung di tengah atas (`fixed top-3 sm:top-5 inset-x-0 mx-auto w-fit`), bentuk kapsul penuh (`rounded-full`).
 - Saat di puncak halaman, navbar transparan menyatu dengan kanvas. Saat digulir ke bawah, bertransisi menjadi latar `bg-cream/85` dengan `backdrop-blur-xl` dan border `border-ink/10`.
 - **Indikator Aktif Warna Dasar Biru (`bg-indigo-brand text-white`):** Saat tombol diklik atau section terkait sedang berada di viewport (ScrollSpy), pill meluncur mulus dengan latar belakang **biru solid** dan teks **putih tebal**, menegaskan 60% warna utama.
-- Efek **Gliding Tab Indicator**: latar belakang pill meluncur mulus menggunakan Framer Motion `layoutId="seanHalpinGlidingPill"` dengan spring physics.
+- Efek **Gliding Tab Indicator**: latar belakang pill meluncur mulus menggunakan Motion (dulu Framer Motion) `layoutId="navbarActiveGlidingPill"` dengan spring physics (`stiffness: 420, damping: 32`).
 - Isi: Monogram bulat "G" di kiri, menu navigasi di tengah, **toggle bahasa ID | EN** dan tombol mobile drawer di kanan.
 
 ### Toggle bahasa
@@ -172,7 +178,9 @@ Props yang diharapkan: warna (`indigo | coral | mint | sun | white`), ukuran/spa
 
 Animasi adalah **ciri khas** portofolio ini, bukan hiasan tambahan. Targetnya: terasa **hidup, premium, dan disengaja**, tanpa mengorbankan kecepatan dan keterbacaan.
 
-Library: **Framer Motion** (paket `motion` dengan import `motion/react`, atau `framer-motion`; cek versi terbaru, pilih **satu** saja, dan tanyakan Gilang jika ragu).
+Library: **Motion** (dulu bernama Framer Motion) — paket `motion` v14, di-import lewat `motion/react`. Proyek hanya memakai satu library animasi ini; jangan menambah `framer-motion` atau library animasi lain.
+
+Pengecualian yang disengaja: `TopoBackground` (WebGL shader, lihat §16) dan `TechMarquee` (CSS `@keyframes`) tidak memakai Motion karena keduanya butuh loop kontinu yang lebih efisien di luar React.
 
 ### 6.1 Bahasa gerak (motion tokens)
 
@@ -362,47 +370,99 @@ Isi web sama pentingnya dengan tampilannya.
 
 ## 16. Background Topografi (Garis Kontur)
 
-Lapisan dekoratif berbentuk **peta topografi**: garis kontur tipis seperti peta elevasi, digambar di `<canvas>` di belakang konten. Menambahkan "ritme" dan tekstur visual alami tanpa menambah elemen dekoratif slop. Terinspirasi dari estetika portofolio teknis modern (seperti referensi ekawahyu-portofolio).
+Lapisan dekoratif berbentuk **peta topografi**: garis kontur tipis seperti peta elevasi. Digambar langsung di GPU lewat **WebGL + fragment shader (GLSL)** dalam komponen `src/components/TopoBackground.tsx` — bukan canvas 2D, bukan SVG. Menambahkan "ritme" dan tekstur visual alami tanpa menambah elemen dekoratif slop. Terinspirasi dari estetika portofolio teknis modern (seperti referensi ekawahyu-portofolio).
 
-### 16.1 Tujuan & Prinsip
-- **Fungsi:** Mengisi latar kanvas krem di area bawah halaman (Contact + Footer) dan memberi Hero ritme hidup tanpa mengganggu keterbacaan CTA.
-- **Posisi:** Berada di kanvas luar (`absolute inset-0 z-0`), BUKAN terkurung di dalam kartu bento. Kartu bento solid (seperti kartu indigo Kontak) mengapung di atasnya.
-- **Dekoratif sepenuhnya:** `aria-hidden="true"`, `pointer-events-none`. Semua teks, tombol, dan tautan tetap berada di layer atas (`relative z-10`) dengan kontras terjaga.
+Dependensi: **tidak ada library tambahan**. Hanya WebGL native + ekstensi `OES_standard_derivatives` (wajib untuk anti-aliasing kontur di GPU).
+
+### 16.1 API & Prinsip
+Props komponen (semua opsional):
+
+| Prop | Default | Fungsi |
+|---|---|---|
+| `tone` | `'ink'` | Warna garis: `ink` = `#18181b` (di atas latar krem), `cream` = `#faf7f2` (di atas latar gelap). |
+| `opacity` | `0.7` | Pengali alpha garis (uniform `lineOpacity`). |
+| `speed` | `0.75` | Kecepatan evolusi sumbu waktu `z` pada noise. |
+| `scale` | `1.0` | Kerapatan fitur: `feature = 280 * scale` piksel per sel noise. |
+| `interactive` | `true` | Mengaktifkan tonjolan kursor + riak klik. |
+| `className` | `fixed inset-0 z-0` | Kelas wrapper; nilai default = lapisan full-screen. |
+
+- **Satu draw call:** satu `<canvas>` full-window + *full-screen triangle*, semua noise dan ekstraksi kontur dihitung di fragment shader. Tidak ada `ctx.stroke()`, tidak ada polyline di CPU.
+- **Posisi:** lapisan latar (`z-0`) di luar kartu bento; kartu bento solid mengapung di atasnya. Konten selalu di `relative z-10`.
+- **Dekoratif sepenuhnya:** wrapper dan canvas `aria-hidden="true"`, wrapper `pointer-events-none overflow-hidden`. Semua teks, tombol, dan tautan tetap di layer atas dengan kontras terjaga.
+- **Ukuran canvas selalu `window.innerWidth/innerHeight`** (bukan ukuran elemen), supaya koordinat topografi konsisten antara instance `fixed` (global) dan `sticky` (area gelap). Tampilan dipotong oleh `overflow-hidden` pada wrapper.
 
 ### 16.2 Gaya Garis & Konfigurasi Visual
-- **Tangga kontur:** 14 level dengan ambang pita elevasi tetap dari -0.72 hingga +0.72.
-- **Index contour:** Setiap level ke-5 (level 5 dan 10) digambar lebih tebal dan lebih gelap sebagai penanda utama elevasi peta topografi.
-- **Ketebalan & Opasitas:**
-  | Jenis | Ketebalan | Opacity Kontak + Footer | Opacity Hero (Pengali 0.75) |
-  |---|---|---|---|
-  | Garis biasa | 1.0 px | 0.28 | ~0.21 |
-  | Index contour | 1.8 px | 0.62 | ~0.46 |
-- **Skala Noise:** 0.0035 per piksel — menghasilkan pola topografi dengan kerapatan ideal yang menyerupai peta kontur gunung/lembah nyata.
-- **Warna:** Diambil dinamis dari token CSS `--color-ink` dengan fallback aman `#18181b`.
+- **Noise:** 3D gradient noise dua oktaf — `noise(n, z) * 1.1 + noise(n * 2.1, z * 1.7) * 0.45`, dengan `n = (screenPoint + scrollOffset) / feature`.
+- **Skala fitur:** `feature = 280 * scale` piksel per sel noise. (Angka `noiseScale 0.0035` dari versi canvas 2D lama **tidak berlaku lagi**.)
+- **Tangga kontur:** `range = 0.95` dengan 14 pita elevasi, sehingga `step = (2 × 0.95) / 14`.
+- **Index contour:** setiap level kelipatan 5 (`mod(nearest, 5) == 0`) digambar lebih tebal dan lebih tegas sebagai penanda elevasi utama.
+- **Anti-aliasing:** lebar garis dihitung dalam ruang layar memakai turunan `dFdx/dFdy` terhadap nilai kontur, lalu alpha diturunkan dari jarak (dalam piksel) ke level terdekat. Hasilnya garis tetap tajam di semua zoom tanpa tangga/aliasing.
+
+  | Jenis | Lebar garis | Faktor alpha |
+  |---|---|---|
+  | Garis biasa | `1.0 × dpr` | `0.5 × opacity` |
+  | Index contour | `1.6 × dpr` | `0.9 × opacity` |
+
+- **Warna:** di-hardcode di komponen (ink `#18181b`, cream `#faf7f2`) lalu dikirim sebagai uniform `vec3 color`. **Bukan** dibaca dari token CSS `--color-ink` seperti dokumentasi versi lama.
+- **Output:** premultiplied alpha di atas latar transparan (`gl.clearColor(0, 0, 0, 0)`), jadi lapisan ini benar-benar transparan dan aman ditumpuk di atas warna section apa pun.
 
 ### 16.3 Tempat Pemakaian
-| Lokasi | Mode | Deskripsi |
-|---|---|---|
-| **Area Bawah (Contact + Footer)** | Interaktif + Ambient | Membentang penuh di latar kanvas krem, kartu kontak indigo mengapung di tengahnya, footer menyatu di bawah tanpa pemisah kaku. Mendukung riak klik dan tonjolan kursor. |
-| **Hero Section** | Ambient Motion | Mengalir pelan secara kontinu di latar belakang Hero agar halaman tidak polos, tanpa interaksi klik agar tombol CTA dan stiker tetap fokus. |
-| **Section lain** | — | **Dilarang** agar ritme visual tetap bersih dan tidak berlebihan. |
+| Lokasi | Wrapper | Props | Peran |
+|---|---|---|---|
+| **Global — `App.tsx`** | default `fixed inset-0 z-0` | `tone="ink"` `opacity={0.7}` | Kontur ink di kanvas krem untuk area terang: Proyek, Kontak, footer, dan halaman detail proyek. |
+| **Area gelap Beranda — `HomePage.tsx`** | `sticky top-0 h-screen w-full -mb-[100vh] z-0 overflow-hidden` | `tone="cream"` `opacity={0.28}` `speed={0.6}` `interactive` | Kontur krem di atas latar `#08090d`, memanjang menyelimuti Hero, Tentang/Keahlian, dan Portal tanpa putus. |
+
+- **Section lain:** dilarang menambah instance baru. Cukup dua lapisan di atas agar ritme visual tetap bersih dan biaya GPU tidak menumpuk.
+- `AboutSection` **tidak** merender instance sendiri (dulu sempat ada) — ia hanya menumpang lapisan `sticky` milik `HomePage`.
+- Karena `scrollOffset` ikut ditambahkan ke koordinat, pola kontur bergerak mengikuti dokumen (bukan parallax diam di tempat).
 
 ### 16.4 Perilaku Interaksi
-- **Klik/tap → riak:** Gelombang gaussian merambat keluar dari titik sentuh (`speed: 340`, `width: 72`, `amplitude: 0.32`) lalu meredup halus dalam 2.4 detik.
-- **Pointer move → tonjolan:** Bukit halus yang mengikuti posisi kursor (`radius: 125`, `strength: 0.2`) dengan *smoothing* berbobot 0.14.
-- **Listener:** Dipasang secara pasif pada kontainer bertanda `data-topo-surface`.
-- **Elemen interaktif diabaikan:** Klik pada `a`, `button`, `input`, `textarea`, atau `[role="button"]` tidak memicu riak agar fungsi tombol tetap normal.
+- **Pointer move → tonjolan:** posisi kursor dikirim sebagai uniform `hill`, amplitudo `lift` target `0.22`; keduanya dihaluskan per frame (`0.12` untuk posisi, `0.10` untuk amplitudo). `pointerleave` di dokumen mengembalikan `lift` ke 0.
+- **Klik/tap → riak:** cincin gaussian merambat dari titik klik dengan amplitudo `0.9 · (1 − progress) · cos(d / 65 · 1.8) · exp(−d² / (2 · 65²))`, jangkauan `reach = hypot(lebar, tinggi) × 0.85`.
+  - Durasi **2.2 detik** per riak.
+  - Maksimal **4 riak** aktif bersamaan (array uniform `vec4 ripples[4]`); riak tertua dibuang saat penuh.
+- **Elemen interaktif diabaikan:** klik pada `a`, `button`, `input`, `textarea`, `select`, atau `[role="button"]` tidak memicu riak agar fungsi tombol tetap normal.
+- `interactive={false}` mematikan tonjolan kursor dan riak; kontur tetap mengalir pelan (selama reduced motion tidak aktif).
 
 ### 16.5 Aturan Performa & Lifecycle
-- **Batas frame:** 30 fps saat interaksi kursor/riak aktif; 20 fps saat idle ambient drift.
+- **Satu render loop** `requestAnimationFrame`. Tiap frame hanya satu `gl.drawArrays` (3 vertex); beban utama ada di fragment shader per piksel, bukan di CPU seperti polyline canvas 2D.
 - **devicePixelRatio maksimum 2** untuk layar Retina.
-- **Field noise di-cache:** Sampling 3D simplex noise hanya dihitung ulang bila `z` bergeser cukup jauh (step 0.003).
-- **2 kali `stroke()` per frame**: garis biasa digabung dalam satu path, index contour dalam path kedua.
-- **IntersectionObserver:** Berhenti me-render saat section keluar dari viewport.
-- **Document Visibility:** Berhenti saat tab browser tidak aktif (`document.hidden`).
-- **Resize:** Ditangani dengan `ResizeObserver` yang di-debounce 120 ms.
-- **Cleanup:** `cancelAnimationFrame`, `disconnect()` observer, dan penghapusan event listener saat unmount.
+- **Tab tidak aktif:** frame dilewati saat `document.hidden` (loop tetap hidup, gambar tidak dieksekusi).
+- **Tanpa IntersectionObserver / debounce:** listener `resize` langsung menghitung ulang ukuran canvas. Ini dapat diterima karena instance-nya selalu `fixed`/`sticky` di viewport.
+- **Ganti prop = shader dibuat ulang:** `useEffect` bergantung pada `tone, opacity, speed, scale, interactive`. Oper nilai statis saja — jangan mengirim nilai yang berubah tiap render (state fluktuatif, `Math.random()`), agar program shader tidak di-compile berulang.
+- **Tanpa fallback visual:** bila WebGL atau ekstensi `OES_standard_derivatives` tidak tersedia, komponen hanya `console.warn` dan latar menjadi transparan (konten tetap terbaca).
+- **Cleanup:** `cancelAnimationFrame`, pelepasan semua listener, serta `deleteBuffer` / `deleteProgram` / `deleteShader` saat unmount.
 
 ### 16.6 Aksesibilitas & Reduced Motion
-- `prefers-reduced-motion: reduce` → menghentikan seluruh pergerakan z dan efek riak, me-render **satu frame statis** yang tenang.
+- Wrapper dan canvas `aria-hidden="true"` serta `pointer-events-none` → tidak mengganggu screen reader maupun klik.
+- `prefers-reduced-motion: reduce` → sumbu waktu `z` dibekukan di `0`, sehingga kontur **berhenti mengalir/mengevolusi** dan tampil sebagai peta statis yang tenang.
+- Tonjolan kursor dan riak klik **tetap aktif** dalam mode reduced motion, karena dipicu langsung oleh pengguna (bukan gerak otomatis). Versi canvas 2D lama mematikan keduanya — perilaku itu sudah tidak berlaku.
 - Kontras teks di atas kanvas dan kartu tetap memenuhi standar WCAG 2.1 AA.
+
+---
+
+## 17. Transisi Teks Zoom Portal (GlyphPortal) & Ritme Kontras Gelap-Terang
+
+### 17.1 Ritme Kontras Dwimatra Halaman
+Portofolio menerapkan alur visual sinematik dengan perpindahan kontras antar bagian:
+1. **Area Gelap / Dark Mode (Hero + Tentang & Keahlian + Transisi Portal):**
+   - Membentang penuh (*full-bleed*) dengan latar hitam pekat (`#08090d`).
+   - Page paling atas (Hero Section) bertema gelap dengan tipografi putih (`text-white`), role backend indigo cerah (`text-indigo-400`), dan kartu profil dark glassmorphism.
+   - Dilanjutkan ke Tentang & Keahlian dengan kartu bento visual developer (Terminal, Endpoint, ERD berlatar `variant="dark"`).
+   - Seluruh area gelap diselimuti oleh **satu kanvas animasi WebGL kontinyu (`TopoBackground tone="cream"`)** yang membentang memanjang tanpa garis pemisah.
+2. **Portal Transisi Teks Zoom ("PROJECT"):**
+   - Jembatan visual yang menghubungkan area gelap menuju area terang melalui pembesaran tipografi raksasa menembus aperture lubang huruf "O" dari kata **`PROJECT`**.
+   - Murni menampilkan kata raksasa `PROJECT` berwarna **putih murni (`#ffffff`)** di atas kanvas hitam, bebas dari teks pengisi/dekorasi ekstra.
+3. **Area Terang / Bright Mode (Proyek & Kontak):**
+   - Kembali ke latar kanvas krem hangat (`#faf7f2`) dengan grid kartu proyek penuh warna 60-30-10 dan bento kontak terpadu.
+   - Didukung kanvas WebGL global bertone ink gelap (`tone="ink"`).
+
+### 17.2 Spesifikasi Komponen GlyphPortal
+- **Komponen:** Menggunakan arsitektur `GlyphPortal` di `src/components/ui/glyph-portal.tsx` yang dibungkus oleh `TextPortalTransition.tsx`.
+- **Kata Kunci:** Tetap menggunakan kata **`PROJECT`** pada mode ID maupun EN.
+- **Warna Teks:** Putih murni (`#ffffff`) di atas latar belakang `#08090d`.
+- **Titik Jangkar (Aperture):** Lubang huruf "O" (`focusChar="O"`) dihitung melalui canvas 2D distance-transform untuk menemukan radius lingkaran interior terbesar di dalam glyph.
+- **Interaktivitas:** Mendukung pemilihan huruf interaktif bagi pengguna yang ingin bereksplorasi.
+- **Label Navigasi:** Konsisten menggunakan kata **`Project`** di navbar baik untuk mode Bahasa Indonesia maupun Bahasa Inggris.
+- **Reduced Motion:** Saat `prefers-reduced-motion: reduce` aktif, animasi zoom dinonaktifkan dan diganti dengan tampilan tipografi statis yang tenang.
+

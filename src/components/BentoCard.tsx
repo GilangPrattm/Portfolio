@@ -32,11 +32,12 @@ export interface BentoCardProps extends HTMLMotionProps<'div'> {
  * Menjamin teks di atas coral, mint, dan sun SELALU text-ink (anti teks putih).
  */
 const VARIANT_STYLES: Record<BentoCardVariant, string> = {
-  indigo: 'bg-indigo-brand text-white selection:bg-white selection:text-indigo-brand',
-  coral: 'bg-coral text-ink selection:bg-ink selection:text-coral',
-  mint: 'bg-mint text-ink selection:bg-ink selection:text-mint',
+  indigo: 'bg-indigo-brand text-white selection:bg-white selection:text-indigo-brand shadow-lg shadow-indigo-brand/20',
+  coral: 'bg-coral text-ink selection:bg-ink selection:text-coral shadow-md shadow-coral/15',
+  mint: 'bg-mint text-ink selection:bg-ink selection:text-mint shadow-md shadow-mint/15',
   sun: 'bg-sun text-ink selection:bg-ink selection:text-sun',
-  white: 'bg-white text-ink border border-ink/10 selection:bg-ink selection:text-cream',
+  white: 'bg-white text-ink border border-ink/10 selection:bg-ink selection:text-cream shadow-xs',
+  dark: 'bg-[#12131c]/90 text-white border border-white/10 backdrop-blur-md selection:bg-indigo-brand selection:text-white shadow-xl shadow-black/40',
 }
 
 export const BentoCard: React.FC<BentoCardProps> = ({

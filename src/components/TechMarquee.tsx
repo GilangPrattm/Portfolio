@@ -5,9 +5,10 @@ import { TechSticker } from './TechSticker'
 
 export interface TechMarqueeProps {
   className?: string
+  dark?: boolean
 }
 
-export const TechMarquee: React.FC<TechMarqueeProps> = ({ className = '' }) => {
+export const TechMarquee: React.FC<TechMarqueeProps> = ({ className = '', dark = false }) => {
   const shouldReduceMotion = useReducedMotion()
 
   if (shouldReduceMotion) {
@@ -22,14 +23,16 @@ export const TechMarquee: React.FC<TechMarqueeProps> = ({ className = '' }) => {
     )
   }
 
+  const fadeClass = dark ? 'from-[#08090d]' : 'from-cream'
+
   return (
     <div
       aria-label="Daftar keahlian teknologi"
       className={`group relative w-full max-w-full overflow-hidden py-4 select-none ${className}`}
     >
       {/* Masking Gradient di Sisi Kiri & Kanan */}
-      <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-16 bg-gradient-to-r from-cream to-transparent" />
-      <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-16 bg-gradient-to-l from-cream to-transparent" />
+      <div className={`pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-16 bg-gradient-to-r ${fadeClass} to-transparent`} />
+      <div className={`pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-16 bg-gradient-to-l ${fadeClass} to-transparent`} />
 
       {/* Marquee Track: Track 1 (Aksesibel) + Track 2 (Duplikat Loop aria-hidden) */}
       <div className="flex w-max gap-4 animate-[marquee_28s_linear_infinite] group-hover:[animation-play-state:paused]">

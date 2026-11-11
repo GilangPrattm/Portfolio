@@ -48,7 +48,7 @@ export const ProjectDetailPage: React.FC = () => {
       variants={isAnimated ? staggerContainerVariants : undefined}
       initial="hidden"
       animate="visible"
-      className="pt-24 pb-16 space-y-10"
+      className="mx-auto max-w-6xl px-4 sm:px-6 md:px-12 pt-24 pb-16 space-y-10"
     >
       {/* Navigasi Kembali */}
       <motion.div variants={isAnimated ? fadeUpVariants : undefined}>

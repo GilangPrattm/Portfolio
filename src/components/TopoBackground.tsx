@@ -269,6 +269,9 @@ export const TopoBackground: React.FC<TopoBackgroundProps> = ({
     const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 
     const resize = () => {
+      // Selalu gunakan ukuran window agar koordinat topografi konsisten
+      // antara instance fixed (global) dan absolute (lokal per-section).
+      // Canvas terbatas secara visual oleh overflow-hidden pada wrapper.
       width = window.innerWidth
       height = window.innerHeight
       dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -401,7 +404,7 @@ export const TopoBackground: React.FC<TopoBackgroundProps> = ({
     <div
       ref={wrapRef}
       aria-hidden="true"
-      className={`fixed inset-0 pointer-events-none z-0 overflow-hidden ${className}`}
+      className={`pointer-events-none overflow-hidden ${className || 'fixed inset-0 z-0'}`}
     >
       <canvas ref={canvasRef} aria-hidden="true" className="block h-full w-full" />
     </div>

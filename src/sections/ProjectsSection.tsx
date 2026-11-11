@@ -9,7 +9,11 @@ export const ProjectsSection: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <section id="projects" aria-labelledby="projects-title" className="pt-8 pb-12 scroll-mt-24">
+    <section
+      id="projects"
+      aria-labelledby="projects-title"
+      className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-12 pt-16 pb-12 scroll-mt-24"
+    >
       {/* Section Header */}
       <div className="mb-8 max-w-2xl">
         <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/60">

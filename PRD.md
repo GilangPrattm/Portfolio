@@ -41,38 +41,44 @@ Pemilik memiliki keahlian kuat dalam arsitektur backend (PHP/Laravel, Java, MySQ
 
 ## 3. Spesifikasi Fungsional (Feature Specifications)
 
-### 3.1 Navigasi Global (`Navbar` — Gaya Floating Island ala Sean Halpin)
-* **Struktur Floating Capsule:** Terapung di tengah atas viewport (`fixed top-3 sm:top-5 inset-x-0 mx-auto w-fit z-50`) dengan bentuk pil bulat (*rounded-full*), bukan batas garis kaku ujung-ke-ujung.
-* **Material Glassmorphism:** Latar belakang `bg-cream/75` (atau `bg-cream/90` saat di-scroll) yang dipadukan dengan `backdrop-blur-xl`, border halus `border-ink/10`, dan bayangan ringan `shadow-lg shadow-ink/5`.
-* **Gliding Tab Indicator (Signature Motion):** Tab latar belakang putih meluncur dinamis antar-menu saat kursor berpindah (*hovered*), didukung oleh mekanisme *shared layout animation* Framer Motion (`layoutId="seanHalpinGlidingPill"`) dengan fisika pegas responsif (`stiffness: 400, damping: 30`).
-* **Multi-Language Switcher (`LanguageToggle`):** Terintegrasi di sisi kanan kapsul (`ID | EN`) dengan animasi pill independen dan sinkronisasi `localStorage`.
-* **Mobile Floating Drawer:** Pada layar kecil, bar menampilkan logo, toggle bahasa, dan hamburger button. Saat dibuka, menu navigasi mengembang menjadi kartu mengambang dengan sudut membulat besar (*rounded-3xl*).
+### 3.1 Navigasi Global (`Navbar` — Gaya Floating Island)
+* **Struktur Floating Capsule:** Terapung di tengah atas viewport (`fixed top-3 sm:top-5 inset-x-0 mx-auto w-fit z-50`) dengan bentuk pil bulat (*rounded-full*).
+* **Adaptasi Dark/Light Mode Otomatis:**
+  * Di Area Gelap (Hero, Tentang & Keahlian, Portal Transisi): mengadopsi *dark glassmorphism* (`bg-zinc-950/85 border-white/15 text-white`).
+  * Di Area Terang (Project, Kontak): mengadopsi *cream glassmorphism* (`bg-cream/90 border-ink/10 text-ink`).
+* **Gliding Tab Indicator (Signature Motion):** Tab latar belakang biru meluncur dinamis antar-menu saat kursor berpindah atau saat scroll (`layoutId="navbarActiveGlidingPill"`).
+* **Penamaan Menu Navigasi:** Konsisten menggunakan **Tentang**, **Project** (di bahasa Indonesia maupun Inggris), dan **Kontak**.
+* **Deteksi Presisi:** Dilengkapi ScrollSpy IntersectionObserver dan *bottom-of-page detection* yang memastikan tab Kontak selalu aktif saat berada di dasar halaman.
 
-### 3.2 Bagian Hero (`Hero Section`)
-* **Arsitektur Grid 2 Kolom (Desktop):**
-  * **Kolom Kiri (Konten & Narasi):**
-    * *Mask Reveal Headline:* Nama ("Gilang Pratama Putra") dan peran ("Backend Developer") dianimasikan muncul meluncur dari balik batas pemotong (`overflow-hidden`).
-    * *Value Proposition:* Ringkasan lugas yang berfokus pada arsitektur sistem backend, integritas data relasional, dan pembelajaran frontend modern.
-    * *Call to Action (CTA):* Tombol *"Lihat Proyek"* (anchor `#projects`) dengan aksen **30% Vibrant Coral** (`bg-coral text-ink font-bold`) dan *"Hubungi Saya"* (anchor `#contact`) dengan aksen **60% Primary Blue** (`border-2 border-indigo-brand text-indigo-brand font-bold`).
-  * **Kolom Kanan (Wadah Foto Profil Gilang):**
-    * Kartu foto profil berdimensi rasio $4:5$ dengan frame membulat modern (`rounded-3xl` berlatar belakang `bg-white/80` dan border `border-ink/10`).
-    * Menggunakan berkas sumber `src/assets/hero.png` yang siap diperbarui kapan saja oleh Gilang.
-    * Dilengkapi floating badge info status akademis Politeknik Negeri Jember (POLIJE) dan interaktivitas hover pegas (*tilt/elevation*).
+### 3.2 Bagian Hero (`Hero Section` - Mode Gelap / Hitam)
+* **Penyatuan Tema Gelap:** Dirancang dalam balutan latar hitam pekat (`#08090d`) selaras dengan Tentang & Keahlian.
+* **Kolom Kiri (Konten & Narasi):**
+  * *Headline:* Nama ("Gilang Pratama Putra") dalam `text-white` tebal dan peran ("Backend Developer") beraksen indigo cerah `text-indigo-400`.
+  * *Call to Action (CTA):* Tombol *"Lihat Project"* dengan aksen **30% Vibrant Coral** (`bg-coral text-ink font-bold`) dan *"Hubungi Saya"* dengan border transparan gelap elegan (`border-2 border-indigo-400/60 bg-white/5 text-white hover:bg-indigo-brand`).
+* **Kolom Kanan (Wadah Foto Profil Gilang):**
+  * Kartu foto profil rasio $4:5$ dengan frame *dark glassmorphism* (`border-white/10 bg-zinc-900/80 p-3 shadow-2xl`).
+  * Floating badge status POLIJE dengan indikator hijau mint hidup.
 
-### 3.3 Struktur Bento Grid (`About & Skills Section`)
-Menggunakan arsitektur modular Bento 3 kolom (desktop) dan 1 kolom bertumpuk (mobile):
-* **Card Profil Utama (`bg-indigo-brand`):** Berisi ringkasan latar belakang, filosofi rekayasa, rentang span 2 kolom desktop.
+### 3.3 Struktur Bento Grid (`About & Skills Section` - Mode Gelap / Hitam)
+Menggunakan arsitektur modular Bento 3 kolom yang menyatu dalam kanvas gelap tanpa sekat pemisah:
+* Diselimuti satu latar WebGL kontinu (`TopoBackground tone="cream"`) yang memanjang dari Hero hingga Portal.
+* **Card Profil Utama (`bg-indigo-brand`):** Ringkasan latar belakang, arsitektur backend, rentang span 2 kolom desktop.
 * **Card Core Tech Stack (`bg-coral`):** Badge mono-font untuk teknologi backend utama: PHP, Laravel, Java, MySQL, dan PostgreSQL dasar.
-* **Card "Sedang Dipelajari" (`bg-mint`):** Khusus menampung teknologi eksplorasi (JavaScript, TypeScript, React) yang ditandai dengan badge eksplisit agar jujur dan tidak melebih-lebihkan kompetensi.
-* **Card Metrik / Pendekatan Netral (`bg-white`):** Menampilkan prinsip arsitektur perangkat lunak, kebiasaan manajemen proyek, atau deployment hosting.
+* **Card "Sedang Dipelajari" (`bg-mint`):** Teknologi eksplorasi (JavaScript, TypeScript, React) yang ditandai badge transparan terukur.
+* **Card Visual Developer (`variant="dark"`):** TerminalCard, EndpointCard, dan ERDCard berlatar gelap menyerupai IDE modern.
 
-### 3.4 Katalog & Filter Proyek (`Projects Section`)
+### 3.4 Transisi Teks Zoom Portal (`GlyphPortal Transition`)
+* **Kata Kunci:** Kata raksasa **`PROJECT`** berwarna **putih murni (`#ffffff`)** di atas kanvas hitam `#08090d`.
+* **Animasi Zoom Menembus Huruf "O":** Menggunakan engine `GlyphPortal` berbasis kalkulasi *distance transform 2D interior glyph*. Saat di-scroll, kamera zoom menembus cincin huruf "O", membuka kanvas terang (*Bright Mode*) menuju katalog proyek tanpa ornamen dummy.
+* **Aksesibilitas Reduced Motion:** Mengganti animasi zoom dengan layout statis jika pengguna mengaktifkan `prefers-reduced-motion`.
+
+### 3.5 Katalog & Filter Proyek (`Projects Section` - Mode Terang)
 * **Bento Project Cards:** Menampilkan cuplikan proyek dengan thumbnail rasio 16:9, judul, ringkasan kontekstual, tag teknologi (`font-mono`), serta tombol demo/kode.
-* **Visual Hierarchy:** Proyek sorotan utama (*featured project*) dialokasikan warna aksen `bg-sun`, sedangkan proyek lainnya menggunakan kartu netral (`bg-white` dengan border halus).
+* **Visual Hierarchy:** Proyek sorotan utama (*featured project*) dialokasikan warna aksen `bg-coral text-ink font-bold`, sedangkan tombol detail menggunakan warna utama `bg-indigo-brand text-white`.
 * **Zero Dummy Image Exposure:** Thumbnail proyek instansi yang belum diverifikasi hak publikasinya wajib menggunakan *fallback dynamic abstract gradient/monogram card*.
 * **Interaktivitas:** Seluruh kartu dapat diklik untuk navigasi langsung menuju halaman detail proyek.
 
-### 3.5 Halaman Detail Proyek (`ProjectDetail Page`)
+### 3.6 Halaman Detail Proyek (`ProjectDetail Page`)
 * **Client-Side Routing:** Menggunakan rute dinamis berbasis slug (`/projects/:slug`).
 * **Arsitektur Konten Detail:**
   1. Header proyek (Judul, Kategori, Tahun, Status: Selesai / Dalam Pengerjaan).

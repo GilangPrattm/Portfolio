@@ -46,7 +46,7 @@ const AppContent: React.FC = () => {
       <main
         id="main-content"
         tabIndex={-1}
-        className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 md:px-12 py-8 md:py-12 w-full flex-1 focus:outline-none"
+        className="relative z-10 w-full flex-1 focus:outline-none"
       >
         <AnimatePresence mode="wait">
           <motion.div
