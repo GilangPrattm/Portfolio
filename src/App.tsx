@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Navbar } from './components/Navbar'
 import { ScrollToTop } from './components/ScrollToTop'
 import { ScrollProgress } from './components/ScrollProgress'
+import { TopoBackground } from './components/TopoBackground'
 import { HomePage } from './pages/HomePage'
 import { ProjectDetailPage } from './pages/ProjectDetailPage'
 import { NotFoundPage } from './pages/NotFoundPage'
@@ -22,7 +23,10 @@ const AppContent: React.FC = () => {
     : pageTransitionVariants
 
   return (
-    <div className="min-h-screen bg-cream text-ink antialiased selection:bg-indigo-brand selection:text-white overflow-x-clip flex flex-col justify-between">
+    <div className="relative min-h-screen bg-cream text-ink antialiased selection:bg-indigo-brand selection:text-white overflow-x-clip flex flex-col justify-between">
+      {/* 0. Full-Screen Topography Background (WebGL GPU 60fps, 70% opacity) */}
+      <TopoBackground tone="ink" opacity={0.7} />
+
       {/* 1. Indikator Progres Scroll & Reset Viewport */}
       <ScrollProgress />
       <ScrollToTop />
@@ -42,7 +46,7 @@ const AppContent: React.FC = () => {
       <main
         id="main-content"
         tabIndex={-1}
-        className="mx-auto max-w-6xl px-4 sm:px-6 md:px-12 py-8 md:py-12 w-full flex-1 focus:outline-none"
+        className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 md:px-12 py-8 md:py-12 w-full flex-1 focus:outline-none"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -61,12 +65,14 @@ const AppContent: React.FC = () => {
         </AnimatePresence>
       </main>
 
-      {/* 5. Footer Sederhana */}
-      <footer className="border-t border-ink/5 bg-cream py-8 text-center mt-12">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-12 font-mono text-xs text-ink/60">
-          <p>&copy; {CURRENT_YEAR} {t('footer.copyright')}</p>
-        </div>
-      </footer>
+      {/* 5. Footer untuk Halaman Non-Beranda (Di Beranda sudah menyatu di ContactSection) */}
+      {location.pathname !== '/' && (
+        <footer className="relative z-10 border-t border-ink/5 bg-cream/80 backdrop-blur-xs py-8 text-center mt-12">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-12 font-mono text-xs text-ink/60">
+            <p>&copy; {CURRENT_YEAR} {t('footer.copyright')}</p>
+          </div>
+        </footer>
+      )}
     </div>
   )
 }

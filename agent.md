@@ -187,7 +187,9 @@ Tandai `[x]` saat selesai. Kerjakan **berurutan**.
 ### Fase 2 — Backend dan Halaman Admin (nanti, belum dimulai)
 Tujuan: Gilang bisa **menambah proyek lewat halaman admin** tanpa mengedit kode.
 - Butuh: API + database + autentikasi.
-- **Belum diputuskan:** Laravel (Sanctum, MySQL/PostgreSQL) **atau** Node.js + TypeScript (Express/NestJS). Tanyakan ke Gilang saat Fase 1 selesai; **jangan memilih sendiri**.
+- **Keputusan Gilang (dicatat):** untuk sekarang pengelolaan konten **manual lewat data layer** (`src/data/projects.ts`). Panel admin **ditunda** — perlu API + database + auth + hosting kedua, sementara portofolio pribadi jarang diupdate mingguan.
+- **Tetap belum diputuskan:** Laravel (Sanctum, MySQL/PostgreSQL) **atau** Node.js + TypeScript (Express/NestJS). Tanyakan lagi ke Gilang saat benar-benar mau mulai Fase 2; **jangan memilih sendiri**.
+- **Jalur tengah yang tersedia:** CMS statis git-based (Decap / Netlify CMS) — antarmuka web untuk edit konten tanpa backend sendiri, data tetap di repo.
 - Perpindahan dari `data/projects.ts` ke API harus mulus karena tipe `Project` sudah dirancang lebih dulu.
 - Jangan mengerjakan apa pun dari Fase 2 sebelum Fase 1 selesai dan Gilang menyetujui.
 

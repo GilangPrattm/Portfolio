@@ -34,12 +34,12 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({ className = '' }) =>
         {/* URL Bar Mockup */}
         <div className="flex items-center justify-between rounded-2xl border border-ink/10 bg-cream/70 px-3.5 py-2.5 font-mono text-xs shadow-xs">
           <div className="flex items-center gap-2">
-            <span className="rounded-lg bg-mint/20 px-2 py-0.5 font-bold text-ink text-[11px]">
+            <span className="rounded-lg bg-indigo-brand/15 px-2 py-0.5 font-bold text-indigo-brand text-[11px]">
               GET
             </span>
             <span className="text-ink/80 font-medium truncate">/api/v1/health</span>
           </div>
-          <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-800">
+          <span className="rounded-full bg-mint/25 border border-mint/40 px-2.5 py-0.5 text-[10px] font-bold text-ink">
             200 OK
           </span>
         </div>

@@ -56,10 +56,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, className = '
             </div>
           )}
 
-          {/* Badge Proyek Unggulan */}
+          {/* Badge Proyek Unggulan (30% Warna Sekunder 1: Vibrant Coral) */}
           {project.featured && (
-            <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-cream shadow-xs">
-              <Sparkles className="h-3 w-3 text-sun" aria-hidden="true" />
+            <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-coral px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-ink shadow-sm">
+              <Sparkles className="h-3 w-3 text-ink" aria-hidden="true" />
               <span>{t('projects.featuredBadge')}</span>
             </div>
           )}
@@ -71,11 +71,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, className = '
             <span className="font-mono text-xs font-semibold text-ink/65 uppercase tracking-wide">
               {role}
             </span>
-            <span className="font-mono text-[11px] font-medium text-ink/60">
-              {project.status === 'completed'
-                ? t('projects.status.completed')
-                : t('projects.status.inProgress')}
-            </span>
+            {/* Status Proyek: 10% Warna Sekunder 2 (Mint) untuk status Selesai */}
+            {project.status === 'completed' ? (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-mint/40 bg-mint/20 px-2.5 py-0.5 font-mono text-[11px] font-bold text-ink">
+                <span className="h-1.5 w-1.5 rounded-full bg-mint" />
+                {t('projects.status.completed')}
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-sun/50 bg-sun/30 px-2.5 py-0.5 font-mono text-[11px] font-bold text-ink">
+                <span className="h-1.5 w-1.5 rounded-full bg-sun" />
+                {t('projects.status.inProgress')}
+              </span>
+            )}
           </div>
 
           <h3 className="mt-2 font-display text-xl font-bold tracking-tight text-ink md:text-2xl">
@@ -107,9 +114,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, className = '
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          {/* Tombol Utama Proyek (60% Warna Utama: Indigo Brand) */}
           <Link
             to={`/projects/${project.slug}`}
-            className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3.5 py-1.5 font-display text-xs font-semibold text-cream transition-colors hover:bg-ink/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand"
+            className="inline-flex items-center gap-1.5 rounded-full bg-indigo-brand px-4 py-2 font-display text-xs font-bold text-white shadow-sm shadow-indigo-brand/20 transition-all hover:bg-indigo-brand/90 hover:shadow-md hover:shadow-indigo-brand/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand"
           >
             <span>{t('projectDetail.viewCaseStudy')}</span>
             <ArrowRight className="h-3.5 w-3.5" />

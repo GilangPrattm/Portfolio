@@ -30,12 +30,15 @@ export const HeroSection: React.FC = () => {
   const shouldReduceMotion = useReducedMotion()
 
   return (
-    <section aria-labelledby="hero-title" className="pt-20 pb-8 sm:pt-24 md:pt-28 md:pb-12">
+    <section
+      aria-labelledby="hero-title"
+      className="relative pt-20 pb-8 sm:pt-24 md:pt-28 md:pb-12"
+    >
       <motion.div
         variants={staggerContainerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12"
+        className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12"
       >
         {/* Kolom Kiri (Konten & Teks) */}
         <div className="flex flex-col items-start gap-6 lg:col-span-7">
@@ -73,25 +76,27 @@ export const HeroSection: React.FC = () => {
           </motion.p>
 
           <motion.div variants={fadeUpVariants} className="flex flex-wrap items-center gap-4 pt-2">
+            {/* CTA 1: 30% Warna Sekunder 1 (Vibrant Coral) */}
             <motion.a
               href="#projects"
               variants={shouldReduceMotion ? undefined : buttonHoverMotion}
               initial="rest"
               whileHover={shouldReduceMotion ? undefined : 'hover'}
               whileTap={shouldReduceMotion ? undefined : 'tap'}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-ink px-7 py-3 font-display text-sm font-semibold text-cream shadow-xs transition-colors hover:bg-ink/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand focus-visible:ring-offset-2"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-ink/10 bg-coral px-7 py-3 font-display text-sm font-bold text-ink shadow-md shadow-coral/25 transition-all hover:bg-coral/90 hover:shadow-lg hover:shadow-coral/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2"
             >
               <span>{t('hero.ctaProjects')}</span>
               <ArrowDown className="h-4 w-4" aria-hidden="true" />
             </motion.a>
 
+            {/* CTA 2: 60% Warna Utama (Electric Blue / Indigo) */}
             <motion.a
               href="#contact"
               variants={shouldReduceMotion ? undefined : buttonHoverMotion}
               initial="rest"
               whileHover={shouldReduceMotion ? undefined : 'hover'}
               whileTap={shouldReduceMotion ? undefined : 'tap'}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border-2 border-ink/20 bg-transparent px-7 py-3 font-display text-sm font-semibold text-ink transition-colors hover:border-ink hover:bg-ink/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand focus-visible:ring-offset-2"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border-2 border-indigo-brand bg-white/80 px-7 py-3 font-display text-sm font-bold text-indigo-brand shadow-xs transition-all hover:bg-indigo-brand hover:text-white hover:shadow-md hover:shadow-indigo-brand/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand focus-visible:ring-offset-2"
             >
               <Mail className="h-4 w-4" aria-hidden="true" />
               <span>{t('hero.ctaContact')}</span>

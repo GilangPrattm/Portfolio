@@ -9,7 +9,8 @@ import { SPRING } from '../lib/motion'
 export const Navbar: React.FC = () => {
   const { t } = useTranslation()
   const location = useLocation()
-  const [hoveredId, setHoveredId] = useState<string | null>(null)
+  const [hoveredHref, setHoveredHref] = useState<string | null>(null)
+  const [activeSection, setActiveSection] = useState<string | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -17,12 +18,13 @@ export const Navbar: React.FC = () => {
   const getHref = (hash: string) => (isHome ? hash : `/${hash}`)
 
   const navItems = [
-    { label: t('nav.about'), href: getHref('#about') },
-    { label: t('nav.skills'), href: getHref('#skills') },
-    { label: t('nav.projects'), href: getHref('#projects') },
-    { label: t('nav.contact'), href: getHref('#contact') },
+    { id: 'about', label: t('nav.about'), href: getHref('#about') },
+    { id: 'skills', label: t('nav.skills'), href: getHref('#skills') },
+    { id: 'projects', label: t('nav.projects'), href: getHref('#projects') },
+    { id: 'contact', label: t('nav.contact'), href: getHref('#contact') },
   ]
 
+  // Deteksi scroll untuk background navbar
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
@@ -32,7 +34,39 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // ScrollSpy untuk mendeteksi section aktif secara dinamis saat scroll
+  useEffect(() => {
+    if (!isHome) {
+      return
+    }
+
+    const sectionIds = ['contact', 'projects', 'skills', 'about']
+    const handleScrollSpy = () => {
+      const scrollPos = window.scrollY + 220
+      let current: string | null = null
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
+        if (el) {
+          const top = el.offsetTop
+          if (scrollPos >= top) {
+            current = id
+            break
+          }
+        }
+      }
+      setActiveSection(current)
+    }
+
+    handleScrollSpy()
+    window.addEventListener('scroll', handleScrollSpy, { passive: true })
+    return () => window.removeEventListener('scroll', handleScrollSpy)
+  }, [isHome])
+
   const isNavActive = isScrolled || isMobileMenuOpen
+
+  // Menentukan href yang sedang aktif (apakah sedang dihover atau section aktif)
+  const activeHref = activeSection ? getHref(`#${activeSection}`) : null
+  const currentHighlight = hoveredHref || activeHref
 
   return (
     <header className="fixed top-3 sm:top-5 inset-x-0 z-50 flex flex-col items-center px-4 pointer-events-none">
@@ -43,7 +77,7 @@ export const Navbar: React.FC = () => {
         transition={SPRING.smooth}
         className={`pointer-events-auto flex items-center justify-between gap-1 sm:gap-2 rounded-full px-2 py-1.5 transition-all duration-300 ease-out ${
           isNavActive
-            ? 'border border-ink/10 bg-cream/85 backdrop-blur-xl shadow-lg shadow-ink/5'
+            ? 'border border-ink/10 bg-cream/90 backdrop-blur-xl shadow-lg shadow-ink/5'
             : 'border border-transparent bg-transparent shadow-none backdrop-blur-none'
         }`}
       >
@@ -51,9 +85,10 @@ export const Navbar: React.FC = () => {
         <Link
           to="/"
           aria-label="Kembali ke beranda"
+          onClick={() => setActiveSection(null)}
           className="group flex items-center gap-2 rounded-full pl-1.5 pr-2.5 py-1 text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand"
         >
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ink font-mono text-xs font-bold text-cream transition-transform duration-200 group-hover:scale-105">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-brand font-mono text-xs font-bold text-white shadow-xs transition-transform duration-200 group-hover:scale-105">
             G
           </span>
           <span className="font-display text-sm font-bold tracking-tight text-ink hidden xs:inline-block">
@@ -61,27 +96,30 @@ export const Navbar: React.FC = () => {
           </span>
         </Link>
 
-        {/* Desktop Nav Items dengan Gliding Tab Indicator */}
+        {/* Desktop Nav Items dengan Gliding Tab Indicator Biru Utama */}
         <nav
           aria-label="Navigasi Utama"
-          onMouseLeave={() => setHoveredId(null)}
+          onMouseLeave={() => setHoveredHref(null)}
           className="relative hidden items-center gap-0.5 md:flex"
         >
           {navItems.map((item) => {
-            const isHovered = hoveredId === item.href
+            const isHighlighted = currentHighlight === item.href
             return (
               <a
-                key={item.href}
+                key={item.id}
                 href={item.href}
-                onMouseEnter={() => setHoveredId(item.href)}
-                className="relative z-10 rounded-full px-3.5 py-1.5 font-display text-xs font-semibold text-ink/75 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand"
+                onMouseEnter={() => setHoveredHref(item.href)}
+                onClick={() => setActiveSection(item.id)}
+                className={`relative z-10 rounded-full px-3.5 py-1.5 font-display text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand ${
+                  isHighlighted ? 'text-white' : 'text-ink/70 hover:text-ink'
+                }`}
               >
-                {/* Gliding Pill Indicator (Spring Physics ala Sean Halpin) */}
-                {isHovered && (
+                {/* Gliding Pill Indicator Warna Dasar Biru Utama (60% Primary) */}
+                {isHighlighted && (
                   <motion.span
-                    layoutId="seanHalpinGlidingPill"
-                    className="absolute inset-0 z-[-1] rounded-full bg-white shadow-xs border border-ink/5"
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    layoutId="navbarActiveGlidingPill"
+                    className="absolute inset-0 z-[-1] rounded-full bg-indigo-brand shadow-md shadow-indigo-brand/25"
+                    transition={{ type: 'spring', stiffness: 420, damping: 32 }}
                   />
                 )}
                 {item.label}
@@ -107,7 +145,9 @@ export const Navbar: React.FC = () => {
             aria-expanded={isMobileMenuOpen}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand md:hidden ${
-              isNavActive ? 'bg-ink/5 text-ink hover:bg-ink/10' : 'bg-transparent text-ink hover:bg-ink/5'
+              isNavActive
+                ? 'bg-ink/5 text-ink hover:bg-ink/10'
+                : 'bg-transparent text-ink hover:bg-ink/5'
             }`}
           >
             {isMobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -126,16 +166,26 @@ export const Navbar: React.FC = () => {
             className="pointer-events-auto mt-2 w-72 overflow-hidden rounded-3xl border border-ink/10 bg-cream/95 p-3 shadow-xl backdrop-blur-xl md:hidden"
           >
             <nav aria-label="Navigasi Mobile" className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="rounded-2xl px-4 py-2.5 font-display text-sm font-semibold text-ink transition-colors hover:bg-ink/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand"
-                >
-                  {item.label}
-                </a>
-              ))}
+              {navItems.map((item) => {
+                const isActive = activeSection === item.id
+                return (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    onClick={() => {
+                      setActiveSection(item.id)
+                      setIsMobileMenuOpen(false)
+                    }}
+                    className={`rounded-2xl px-4 py-2.5 font-display text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-brand ${
+                      isActive
+                        ? 'bg-indigo-brand text-white shadow-sm shadow-indigo-brand/20'
+                        : 'text-ink hover:bg-ink/5'
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                )
+              })}
             </nav>
           </motion.div>
         )}

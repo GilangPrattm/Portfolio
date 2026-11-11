@@ -22,14 +22,24 @@ Aturan kerja, struktur kode, dan roadmap ada di `AGENT.md`. Jika menyangkut tamp
 
 Semua warna didefinisikan sebagai token di `src/index.css` dalam blok `@theme` (Tailwind v4). **Jangan menulis hex langsung di komponen.** Gunakan nama token.
 
-| Token | Hex | Kelas Tailwind | Fungsi |
+| Token | Hex | Kelas Tailwind | Peran & Alokasi 60-30-10 |
 |---|---|---|---|
-| `--color-cream` | `#faf7f2` | `bg-cream` | Latar halaman |
-| `--color-ink` | `#18181b` | `text-ink` / `bg-ink` | Teks utama, elemen gelap |
-| `--color-indigo-brand` | `#5b5bf0` | `bg-indigo-brand` | Aksen utama (brand), kartu profil, tombol utama |
-| `--color-coral` | `#ff7a59` | `bg-coral` | Aksen hangat, kartu skills |
-| `--color-mint` | `#34d3a0` | `bg-mint` | Aksen segar, kartu "sedang dipelajari" |
-| `--color-sun` | `#ffd25e` | `bg-sun` | Aksen cerah, kartu proyek/highlight |
+| `--color-cream` | `#faf7f2` | `bg-cream` | Fondasi Latar halaman |
+| `--color-ink` | `#18181b` | `text-ink` / `bg-ink` | Fondasi Teks utama, elemen gelap |
+| `--color-indigo-brand` | `#5b5bf0` | `bg-indigo-brand` | **60% Warna Utama**: Navbar aktif biru, tombol aksi, profil & kontak |
+| `--color-coral` | `#ff7a59` | `bg-coral` | **30% Warna Sekunder 1**: Tombol CTA Hero, kartu skills, sorotan hangat |
+| `--color-mint` | `#10b981` | `bg-mint` | **10% Warna Sekunder 2**: Emerald Tech Green (Badge status "Selesai", status "200 OK", live ping) |
+| `--color-sun` | `#ffd25e` | `bg-sun` | Aksen pelengkap: Kartu highlight sekunder / bintang |
+
+### 2.1 Aturan Proporsi Warna: 60-30-10 (Disiplin Harmoni Visual)
+Portofolio menerapkan aturan rasio warna klasik yang disesuaikan untuk antarmuka tech-playful:
+1. **60% Warna Utama (Electric Blue / Indigo `#5b5bf0`):**
+   - Mendominasi identitas visual: Indikator aktif Navbar (warna dasar biru solid `bg-indigo-brand text-white`), judul peran `Backend Developer`, kartu profil utama, kartu kontak, tombol aksi proyek `Detail Proyek`, aksen endpoint RESTful, dan ring fokus keyboard.
+2. **30% Warna Sekunder 1 (Vibrant Coral `#ff7a59`):**
+   - Memberikan energi hangat kontras tinggi: Tombol CTA Hero ("Lihat Proyek"), kartu bento keahlian utama (`BentoCard variant="coral"`), badge sorotan proyek unggulan (*featured*), dan aksen hover interaktif.
+3. **10% Warna Sekunder 2 (Emerald Tech Green `#10b981`):**
+   - Micro-accents untuk status dan keandalan sistem backend: Badge status "Selesai", status runtime HTTP "200 OK", kartu bento teknologi yang sedang dipelajari, status live ping, dan feedback "Tersalin!". Dipilih hijau emerald presisi (bukan toska/pudar) yang melambangkan keandalan server dan aktivitas kode.
+- **Fondasi Dasar:** Latar kanvas krem hangat (`#faf7f2`) dan tipografi gelap (`#18181b`) memastikan keterbacaan maksimal (WCAG 2.1 AA).
 
 ### Aturan pemakaian warna
 - Satu kartu = **satu warna dominan**. Jangan menumpuk dua warna aksen dalam satu kartu.
@@ -40,11 +50,11 @@ Semua warna didefinisikan sebagai token di `src/index.css` dalam blok `@theme` (
 ### Kontras teks (wajib, aksesibilitas)
 | Latar | Warna teks | Catatan |
 |---|---|---|
-| `indigo-brand` | `text-white` | Kontras cukup untuk teks besar dan sedang |
+| `indigo-brand` | `text-white` | Kontras cukup untuk teks besar dan sedang (Rasio ≥ 4.5:1) |
 | `coral` | **`text-ink`** | **Jangan teks putih**: kontras putih di coral terlalu rendah |
-| `mint` | `text-ink` | |
-| `sun` | `text-ink` | |
-| `cream` | `text-ink` | |
+| `mint` | `text-ink` | Kontras tinggi dengan text-ink |
+| `sun` | `text-ink` | Kontras tinggi dengan text-ink |
+| `cream` | `text-ink` | Kontras tinggi dengan text-ink |
 
 Target kontras: minimal **4.5:1** untuk teks biasa dan **3:1** untuk teks besar (≥ 24px, atau ≥ 18.66px tebal). Cek dengan alat contrast checker jika ragu.
 
@@ -131,17 +141,21 @@ Props yang diharapkan: warna (`indigo | coral | mint | sun | white`), ukuran/spa
 - Satu komponen yang dipakai di seluruh halaman. Jangan menulis ulang gaya kartu di banyak tempat.
 - Warna teks otomatis mengikuti tabel kontras di bagian 2.
 
-### Tombol
-- **Primer:** `bg-ink text-cream`, `rounded-full`, `px-6 py-3`, `font-semibold`.
-- **Sekunder:** transparan dengan `border-2 border-ink`, `rounded-full`.
-- Hover: naik sedikit (`-translate-y-0.5`) dan/atau skala kecil. Transisi 150-200ms.
+### Tombol & Komponen Berwarna (Aturan 60-30-10)
+- **Tombol CTA Hero (30% Coral):** `bg-coral text-ink font-bold shadow-md shadow-coral/25 border border-ink/10`, `rounded-full`, `px-7 py-3`. Memberi energi ceria dan dorongan klik tinggi tanpa silau.
+- **Tombol Aksi Proyek / Sekunder Hero (60% Indigo):**
+  - Hero Sekunder: `border-2 border-indigo-brand bg-white/80 text-indigo-brand font-bold hover:bg-indigo-brand hover:text-white`.
+  - Detail Proyek: `bg-indigo-brand text-white font-bold shadow-sm shadow-indigo-brand/20 hover:bg-indigo-brand/90 hover:shadow-md hover:shadow-indigo-brand/30`.
+- **Badge Status Micro-Accents (10% Mint):** `bg-mint/20 border border-mint/40 text-ink font-bold` dengan indikator status dot hijau `bg-mint`.
+- Hover: naik halus (`hover:scale-[1.02]`) dengan shadow bertambah pekat.
 - Fokus keyboard: ring terlihat jelas (`focus-visible:ring-2 focus-visible:ring-indigo-brand focus-visible:ring-offset-2`).
 - Area sentuh minimal **44x44px** di mobile.
 
-### Navbar (Gaya Floating Capsule Sean Halpin)
+### Navbar (Gaya Floating Capsule Sean Halpin dengan Aksen Biru Aktif)
 - Mengapung di tengah atas (`fixed top-3 sm:top-5 inset-x-0 mx-auto w-fit`), bentuk kapsul penuh (`rounded-full`).
 - Saat di puncak halaman, navbar transparan menyatu dengan kanvas. Saat digulir ke bawah, bertransisi menjadi latar `bg-cream/85` dengan `backdrop-blur-xl` dan border `border-ink/10`.
-- Efek **Gliding Tab Indicator**: latar belakang pill putih meluncur mulus menggunakan Framer Motion `layoutId` saat kursor berpindah antar-tautan navigasi.
+- **Indikator Aktif Warna Dasar Biru (`bg-indigo-brand text-white`):** Saat tombol diklik atau section terkait sedang berada di viewport (ScrollSpy), pill meluncur mulus dengan latar belakang **biru solid** dan teks **putih tebal**, menegaskan 60% warna utama.
+- Efek **Gliding Tab Indicator**: latar belakang pill meluncur mulus menggunakan Framer Motion `layoutId="seanHalpinGlidingPill"` dengan spring physics.
 - Isi: Monogram bulat "G" di kiri, menu navigasi di tengah, **toggle bahasa ID | EN** dan tombol mobile drawer di kanan.
 
 ### Toggle bahasa
@@ -343,3 +357,52 @@ Isi web sama pentingnya dengan tampilannya.
 ### 15.3 Marquee Ikon Teknologi (`TechMarquee`)
 - Deretan stiker teknologi berjalan horizontal secara kontinu.
 - **Interaksi:** Otomatis berhenti berputar (*pause animation*) saat kursor diarahkan (*hover*) atau saat sistem mendeteksi preferensi `prefers-reduced-motion`.
+
+---
+
+## 16. Background Topografi (Garis Kontur)
+
+Lapisan dekoratif berbentuk **peta topografi**: garis kontur tipis seperti peta elevasi, digambar di `<canvas>` di belakang konten. Menambahkan "ritme" dan tekstur visual alami tanpa menambah elemen dekoratif slop. Terinspirasi dari estetika portofolio teknis modern (seperti referensi ekawahyu-portofolio).
+
+### 16.1 Tujuan & Prinsip
+- **Fungsi:** Mengisi latar kanvas krem di area bawah halaman (Contact + Footer) dan memberi Hero ritme hidup tanpa mengganggu keterbacaan CTA.
+- **Posisi:** Berada di kanvas luar (`absolute inset-0 z-0`), BUKAN terkurung di dalam kartu bento. Kartu bento solid (seperti kartu indigo Kontak) mengapung di atasnya.
+- **Dekoratif sepenuhnya:** `aria-hidden="true"`, `pointer-events-none`. Semua teks, tombol, dan tautan tetap berada di layer atas (`relative z-10`) dengan kontras terjaga.
+
+### 16.2 Gaya Garis & Konfigurasi Visual
+- **Tangga kontur:** 14 level dengan ambang pita elevasi tetap dari -0.72 hingga +0.72.
+- **Index contour:** Setiap level ke-5 (level 5 dan 10) digambar lebih tebal dan lebih gelap sebagai penanda utama elevasi peta topografi.
+- **Ketebalan & Opasitas:**
+  | Jenis | Ketebalan | Opacity Kontak + Footer | Opacity Hero (Pengali 0.75) |
+  |---|---|---|---|
+  | Garis biasa | 1.0 px | 0.28 | ~0.21 |
+  | Index contour | 1.8 px | 0.62 | ~0.46 |
+- **Skala Noise:** 0.0035 per piksel — menghasilkan pola topografi dengan kerapatan ideal yang menyerupai peta kontur gunung/lembah nyata.
+- **Warna:** Diambil dinamis dari token CSS `--color-ink` dengan fallback aman `#18181b`.
+
+### 16.3 Tempat Pemakaian
+| Lokasi | Mode | Deskripsi |
+|---|---|---|
+| **Area Bawah (Contact + Footer)** | Interaktif + Ambient | Membentang penuh di latar kanvas krem, kartu kontak indigo mengapung di tengahnya, footer menyatu di bawah tanpa pemisah kaku. Mendukung riak klik dan tonjolan kursor. |
+| **Hero Section** | Ambient Motion | Mengalir pelan secara kontinu di latar belakang Hero agar halaman tidak polos, tanpa interaksi klik agar tombol CTA dan stiker tetap fokus. |
+| **Section lain** | — | **Dilarang** agar ritme visual tetap bersih dan tidak berlebihan. |
+
+### 16.4 Perilaku Interaksi
+- **Klik/tap → riak:** Gelombang gaussian merambat keluar dari titik sentuh (`speed: 340`, `width: 72`, `amplitude: 0.32`) lalu meredup halus dalam 2.4 detik.
+- **Pointer move → tonjolan:** Bukit halus yang mengikuti posisi kursor (`radius: 125`, `strength: 0.2`) dengan *smoothing* berbobot 0.14.
+- **Listener:** Dipasang secara pasif pada kontainer bertanda `data-topo-surface`.
+- **Elemen interaktif diabaikan:** Klik pada `a`, `button`, `input`, `textarea`, atau `[role="button"]` tidak memicu riak agar fungsi tombol tetap normal.
+
+### 16.5 Aturan Performa & Lifecycle
+- **Batas frame:** 30 fps saat interaksi kursor/riak aktif; 20 fps saat idle ambient drift.
+- **devicePixelRatio maksimum 2** untuk layar Retina.
+- **Field noise di-cache:** Sampling 3D simplex noise hanya dihitung ulang bila `z` bergeser cukup jauh (step 0.003).
+- **2 kali `stroke()` per frame**: garis biasa digabung dalam satu path, index contour dalam path kedua.
+- **IntersectionObserver:** Berhenti me-render saat section keluar dari viewport.
+- **Document Visibility:** Berhenti saat tab browser tidak aktif (`document.hidden`).
+- **Resize:** Ditangani dengan `ResizeObserver` yang di-debounce 120 ms.
+- **Cleanup:** `cancelAnimationFrame`, `disconnect()` observer, dan penghapusan event listener saat unmount.
+
+### 16.6 Aksesibilitas & Reduced Motion
+- `prefers-reduced-motion: reduce` → menghentikan seluruh pergerakan z dan efek riak, me-render **satu frame statis** yang tenang.
+- Kontras teks di atas kanvas dan kartu tetap memenuhi standar WCAG 2.1 AA.

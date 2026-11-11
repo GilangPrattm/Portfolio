@@ -53,7 +53,7 @@ Pemilik memiliki keahlian kuat dalam arsitektur backend (PHP/Laravel, Java, MySQ
   * **Kolom Kiri (Konten & Narasi):**
     * *Mask Reveal Headline:* Nama ("Gilang Pratama Putra") dan peran ("Backend Developer") dianimasikan muncul meluncur dari balik batas pemotong (`overflow-hidden`).
     * *Value Proposition:* Ringkasan lugas yang berfokus pada arsitektur sistem backend, integritas data relasional, dan pembelajaran frontend modern.
-    * *Call to Action (CTA):* Tombol *"Lihat Proyek"* (anchor `#projects`) dan *"Hubungi Saya"* (anchor `#contact`).
+    * *Call to Action (CTA):* Tombol *"Lihat Proyek"* (anchor `#projects`) dengan aksen **30% Vibrant Coral** (`bg-coral text-ink font-bold`) dan *"Hubungi Saya"* (anchor `#contact`) dengan aksen **60% Primary Blue** (`border-2 border-indigo-brand text-indigo-brand font-bold`).
   * **Kolom Kanan (Wadah Foto Profil Gilang):**
     * Kartu foto profil berdimensi rasio $4:5$ dengan frame membulat modern (`rounded-3xl` berlatar belakang `bg-white/80` dan border `border-ink/10`).
     * Menggunakan berkas sumber `src/assets/hero.png` yang siap diperbarui kapan saja oleh Gilang.
@@ -119,23 +119,28 @@ Menggunakan arsitektur modular Bento 3 kolom (desktop) dan 1 kolom bertumpuk (mo
 
 ## 5. Sistem Desain, Tipografi & Motion Tokens
 
-### 5.1 Token Warna (Tailwind CSS v4 `@theme`)
+### 5.1 Token Warna & Proporsi 60-30-10 (Tailwind CSS v4 `@theme`)
 Didefinisikan secara global pada `src/index.css` tanpa berkas `tailwind.config.js`:
 
 ```css
 @theme {
   --color-cream: #faf7f2;
   --color-ink: #18181b;
-  --color-indigo-brand: #5b5bf0;
-  --color-coral: #ff7a59;
-  --color-mint: #34d3a0;
-  --color-sun: #ffd25e;
+  --color-indigo-brand: #5b5bf0; /* 60% Warna Utama: Navbar aktif, tombol aksi, profil & kontak */
+  --color-coral: #ff7a59;        /* 30% Warna Sekunder 1: CTA Hero, kartu skills, sorotan hangat */
+  --color-mint: #10b981;         /* 10% Warna Sekunder 2: Emerald Tech Green (Status "Selesai", status 200 OK) */
+  --color-sun: #ffd25e;          /* Aksen sekunder pelengkap */
 
   --font-display: "Plus Jakarta Sans", sans-serif;
   --font-sans: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 ```
+
+* **Aturan Proporsi 60-30-10:**
+  * **60% Warna Utama (`indigo-brand`):** Dominasi aksen pada Navbar aktif biru (`bg-indigo-brand text-white`), judul peran `Backend Developer`, kartu profil, kartu kontak, dan tombol aksi "Detail Proyek".
+  * **30% Warna Sekunder 1 (`coral`):** Tombol CTA Hero ("Lihat Proyek"), kartu bento keahlian utama, dan highlight interaktif.
+  * **10% Warna Sekunder 2 (`mint` / `#10b981`):** Emerald Tech Green untuk status badge "Selesai", respons status HTTP "200 OK", live ping, dan feedback salin email.
 
 ### 5.2 Tipografi & Hierarki Skala
 

@@ -70,7 +70,8 @@ export const ProjectDetailPage: React.FC = () => {
           <span className="rounded-full bg-indigo-brand/10 px-3 py-1 font-semibold text-indigo-brand">
             {role}
           </span>
-          <span className="rounded-full bg-mint/20 px-3 py-1 font-semibold text-ink">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-mint/40 bg-mint/20 px-3 py-1 font-semibold text-ink">
+            <span className="h-1.5 w-1.5 rounded-full bg-mint" />
             {project.status === 'completed'
               ? t('projects.status.completed')
               : t('projects.status.inProgress')}
@@ -157,7 +158,7 @@ export const ProjectDetailPage: React.FC = () => {
                     href={project.links.repo}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-between rounded-xl bg-ink/10 px-3.5 py-2 font-mono text-xs font-bold text-ink transition-colors hover:bg-ink hover:text-cream"
+                    className="inline-flex items-center justify-between rounded-xl border border-ink/15 bg-white/80 px-3.5 py-2.5 font-mono text-xs font-bold text-ink transition-colors hover:bg-white hover:border-ink/30"
                   >
                     <span className="flex items-center gap-2">
                       <Code2 className="h-4 w-4" /> {t('projects.viewRepo')}
@@ -170,7 +171,7 @@ export const ProjectDetailPage: React.FC = () => {
                     href={project.links.demo}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-between rounded-xl bg-ink px-3.5 py-2 font-mono text-xs font-bold text-cream transition-colors hover:bg-ink/80"
+                    className="inline-flex items-center justify-between rounded-xl bg-indigo-brand px-3.5 py-2.5 font-mono text-xs font-bold text-white shadow-sm shadow-indigo-brand/20 transition-all hover:bg-indigo-brand/90 hover:shadow-md hover:shadow-indigo-brand/30"
                   >
                     <span>{t('projects.viewDemo')}</span>
                     <ArrowUpRight className="h-4 w-4" />
